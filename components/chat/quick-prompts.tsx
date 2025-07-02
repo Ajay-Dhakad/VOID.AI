@@ -16,7 +16,7 @@ const quickPrompts: QuickPrompt[] = [
   {
     icon: HelpCircle,
     text: "Who are you?",
-    prompt: "Who are you and what can you do?",
+    prompt: "Who are you ?",
     gradient: "bg-violet-50 dark:bg-violet-900/20 border-violet-200 dark:border-violet-800",
   },
   {
