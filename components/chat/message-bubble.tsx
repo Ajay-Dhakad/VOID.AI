@@ -11,6 +11,7 @@ import { CodeBlock } from "@/components/code-block"
 import { ImageDisplay } from "@/components/image-display"
 import { useClipboard } from "@/hooks/useClipboard"
 import { useSpeech } from "@/hooks/useSpeech"
+import VoidLogo from "../voidLooks/voidLogo"
 
 interface MessageBubbleProps {
   message: Message
@@ -166,9 +167,7 @@ const MessageBubble = memo<MessageBubbleProps>(({ message }) => {
     <div className={`flex gap-3 md:gap-4 group ${isUser ? "justify-end" : "justify-start"}`}>
       {!isUser && (
         <div className="flex-shrink-0">
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-600 flex items-center justify-center shadow-sm">
-            <Bot className="h-4 w-4 md:h-5 md:w-5 text-white" />
-          </div>
+          <VoidLogo/>
         </div>
       )}
 

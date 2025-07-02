@@ -4,6 +4,9 @@ import { memo } from "react"
 import { Code2, ImageIcon, Brain, Zap, FileText, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { QuickPrompt } from "@/types/chat"
+import BlurText from "../bitsAnimations/textAnimation"
+import ScrambledText from "../bitsAnimations/scrambledText"
+import TextPressure from "../bitsAnimations/scrambledText"
 
 interface QuickPromptsProps {
   onPromptSelect: (prompt: string) => void
@@ -11,56 +14,76 @@ interface QuickPromptsProps {
 
 const quickPrompts: QuickPrompt[] = [
   {
+    icon: HelpCircle,
+    text: "Who are you?",
+    prompt: "Who are you and what can you do?",
+    gradient: "bg-violet-50 dark:bg-violet-900/20 border-violet-200 dark:border-violet-800",
+  },
+  {
     icon: Code2,
-    text: "Code Review",
+    text: "I Can Review Code",
     prompt: "Review this code and suggest improvements for better performance and readability",
     gradient: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800",
   },
   {
     icon: ImageIcon,
-    text: "Generate Image",
+    text: "I Can Generate Image",
     prompt: "Generate image of a professional business meeting in a modern office",
     gradient: "bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800",
   },
   {
     icon: Brain,
-    text: "Explain Concepts",
+    text: "I Can Explain Concepts",
     prompt: "Explain machine learning concepts in simple terms with practical examples",
     gradient: "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
   },
   {
     icon: Zap,
-    text: "Optimize Code",
+    text: "I Can Optimize Code",
     prompt: "Help me optimize this function for better performance and maintainability",
     gradient: "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800",
   },
   {
     icon: FileText,
-    text: "Write Documentation",
+    text: "I Can Write Documentation",
     prompt: "Help me write comprehensive documentation for this API endpoint",
     gradient: "bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800",
   },
-  {
-    icon: HelpCircle,
-    text: "Problem Solving",
-    prompt: "Help me solve this technical problem step by step with best practices",
-    gradient: "bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800",
-  },
+  // {
+  //   icon: HelpCircle,
+  //   text: "Problem Solving",
+  //   prompt: "Help me solve this technical problem step by step with best practices",
+  //   gradient: "bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800",
+  // },
 ]
 
 const QuickPrompts = memo<QuickPromptsProps>(({ onPromptSelect }) => {
   return (
-    <div className="text-center py-8 md:py-16">
-      <div className="mb-8">
-        <div className="w-16 h-16 mx-auto rounded-full bg-blue-600 flex items-center justify-center mb-4 shadow-lg">
-          <HelpCircle className="h-8 w-8 text-white" />
-        </div>
-        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">AI Assistant</h3>
-        <p className="text-slate-700 dark:text-slate-300 mb-12 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
-          Get help with coding, writing, analysis, and creative tasks. Choose a prompt below or start your own
-          conversation.
-        </p>
-      </div>
+    <div className="text-center w-full py-8 md:py-10">
+      <>
+    {/* <BlurText
+  text="Welcome To Void! Here are some quick prompts to help you get started."
+  className="text-2xl md:text-4xl font-bold text-center justify-center items-center text-slate-900 dark:text-white"
+  animateBy="words"
+  direction="top"
+/> */}
+  
+  <TextPressure
+    text="I am Void"
+    flex={true}
+    alpha={false}
+    stroke={false}
+    width={true}
+    weight={true}
+    italic={true}
+    textColor="#000000"
+    strokeColor="#000000"
+    className="text-2xl md:text-4xl font-bold text-center justify-center items-center text-slate-900 dark:text-white"
+    minFontSize={36}
+  />
+  <br />
+
+</>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
         {quickPrompts.map((prompt, i) => (

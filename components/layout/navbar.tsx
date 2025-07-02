@@ -4,6 +4,7 @@ import { memo, useState } from "react"
 import { MessageSquare, Menu, X, History } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { HistoryManager } from "@/components/chat/history-manager"
+import VoidLogo from "../voidLooks/voidLogo"
 
 const Navbar = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -20,11 +21,9 @@ const Navbar = memo(() => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                <MessageSquare className="h-5 w-5 text-white" />
-              </div>
+             <VoidLogo/>
               <div>
-                <h1 className="text-xl font-bold text-slate-900 dark:text-white">AI Assistant</h1>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">VOID.<span className="text-red-600 dark:text-slate-300">AI</span></h1>
               </div>
             </div>
 

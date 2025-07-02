@@ -83,14 +83,20 @@ export function useChat() {
         })
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
+   toast({
+          title: "Connection Error",
+          description: "Failed to get AI response. Please try again.",
+          variant: "destructive",
+        })        }
 
         const data: ApiResponse = await response.json()
 
         if (data.error) {
-          throw new Error(data.error)
-        }
+   toast({
+          title: "Connection Error",
+          description: "Failed to get AI response. Please try again.",
+          variant: "destructive",
+        })        }
 
         const aiMessage: Message = {
           id: crypto.randomUUID(),
