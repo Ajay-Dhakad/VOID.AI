@@ -14,7 +14,7 @@ import { useSpeech } from "@/hooks/useSpeech"
 import VoidLogo from "../voidLooks/voidLogo"
 
 interface MessageBubbleProps {
-  message: Message
+  message: Message,
 }
 
 const MessageBubble = memo<MessageBubbleProps>(({ message }) => {

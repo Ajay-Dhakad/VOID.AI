@@ -6,6 +6,7 @@ import { memo, useState, useCallback } from "react"
 import { Send, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import BotModes from "./BotModes"
 
 interface ChatInputProps {
   onSend: (message: string) => void
@@ -32,9 +33,14 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
     [handleSend],
   )
 
+
+
   return (
-    <div className="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-4 md:p-6 shadow-lg">
+    <div className="bg-white fixed h-[150px] bottom-0 self-center w-full dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-4 md:p-6 shadow-lg">
       <div className="flex gap-3 max-w-4xl mx-auto">
+
+         <BotModes/>
+        
         <div className="relative flex-1">
           <Input
             value={inputValue}

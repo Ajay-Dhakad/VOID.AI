@@ -42,7 +42,7 @@ const AIChat = memo(() => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-slate-50 pb-[110px] sm:pb-[100px] dark:bg-slate-900">
       {/* Subtle background pattern */}
       <FloatingParticles />
 
@@ -72,14 +72,14 @@ const AIChat = memo(() => {
                       </Button>
                     )}
                   </div>
-                  {messages.map((message) => (
+                  {messages.map((message,i) => (
                     <MessageBubble key={message.id} message={message} />
                   ))}
                 </>
               )}
 
               {isLoading && (
-                <div className="flex gap-4">
+                <div  className="flex gap-4">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-600 flex items-center justify-center">
                   <VoidLogo/>
                     </div>
@@ -94,7 +94,7 @@ const AIChat = memo(() => {
               )}
 
               {/* Invisible element to scroll to */}
-              <div ref={messagesEndRef} className="h-1" />
+              {messages.length > 0 && <div ref={messagesEndRef} className="h-1" />}
             </div>
           </ScrollArea>
 
