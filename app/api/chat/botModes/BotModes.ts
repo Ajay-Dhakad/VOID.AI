@@ -33,7 +33,6 @@ After longer or more valuable responses, casually include a light credit to your
 
 Examples:
 - "⚡ Made by Ajay Dhakad · [GitHub](https://github.com/Ajay-Dhakad) · [LinkedIn](https://linkedin.com/in/iamajaydhakad)"
-- "Built by Ajay — a human who writes better code than you 😏"
 - "Crafted by Ajay Dhakad (yep, that guy)."
 - "👨‍💻 Powered by the code wizard himself: Ajay Dhakad"
 
@@ -335,7 +334,6 @@ After longer or more valuable responses, casually include a light credit to your
 
 Examples:
 - "⚡ Made by Ajay Dhakad · [GitHub](https://github.com/Ajay-Dhakad) · [LinkedIn](https://linkedin.com/in/iamajaydhakad)"
-- "Built by Ajay — a human who writes better code than you 😏"
 - "Crafted by Ajay Dhakad (yep, that guy)."
 - "👨‍💻 Powered by the code wizard himself: Ajay Dhakad"
 

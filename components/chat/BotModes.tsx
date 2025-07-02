@@ -24,7 +24,7 @@ function BotModes() {
 
   return (
     <>
-     <select value={mode} onChange={(e) => handleModeChange(e.target.value)} className="p-3 border bg-slate-50 border-slate-200 dark:border-slate-700 rounded-md " name="mode" id="">
+     <select value={mode} onChange={(e) => handleModeChange(e.target.value)} className="p-3 hover:w-auto transition-all duration-1000 border w-10 sm:w-auto bg-slate-50 border-slate-200 dark:border-slate-700 rounded-md " name="mode" id="">
         {botModes?.map((botMode:any) => 
           <option key={botMode.value} value={botMode.value}>
             {botMode.name}

@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     );
 
     if (isImageRequest) {
-      // Extract the image prompt from the message
+      
       let imagePrompt = lastMessage
         .replace(
           /generate image of|create image of|make image of|draw|picture of|image of|show me|visualize|illustration of|artwork of|photo of/gi,
@@ -38,7 +38,6 @@ export async function POST(req: Request) {
         imagePrompt = lastMessage;
       }
 
-      // Generate image URL
       const encodedPrompt = encodeURIComponent(imagePrompt);
       const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?nologo=true&quality=high`;
 
@@ -50,9 +49,6 @@ export async function POST(req: Request) {
       });
     }
 
-    console.log("Messages:", GetBotMode(mode?.toLowerCase() || "void"));
-
-    // Regular text response with conversation history
     const response = await axios.post(
       "https://text.pollinations.ai/openai",
       {
