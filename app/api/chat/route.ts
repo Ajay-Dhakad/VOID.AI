@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     );
 
     if (isImageRequest) {
-      
+
       let imagePrompt = lastMessage
         .replace(
           /generate image of|create image of|make image of|draw|picture of|image of|show me|visualize|illustration of|artwork of|photo of/gi,
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       },
       {
         headers: {
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer ${process.env.AI_API_TOKEN}`,
           "Content-Type": "application/json",
           "HTTP-Referer": "http://localhost:3000",
           "X-Title": "AI Assistant",
