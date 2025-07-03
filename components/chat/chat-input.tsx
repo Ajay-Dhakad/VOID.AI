@@ -2,11 +2,12 @@
 
 import type React from "react"
 
-import { memo, useState, useCallback } from "react"
-import { Send, Loader2 } from "lucide-react"
+import { memo, useState, useCallback, useEffect } from "react"
+import { Send, Loader2, MicOff, Mic } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BotModes from "./BotModes"
+import { useSpeechInput } from "@/hooks/useSpeachToText"
 
 interface ChatInputProps {
   onSend: (message: string) => void
@@ -33,6 +34,21 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
     [handleSend],
   )
 
+  
+const {
+  transcript,
+  isListening,
+  toggleListening,
+  resetTranscript,
+} = useSpeechInput()
+
+useEffect(() => {
+  if (transcript) {
+    setInputValue((prev) => `${prev} ${transcript}`)
+    resetTranscript()
+  }
+}, [transcript])
+
 
 
   return (
@@ -40,8 +56,17 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
       <div className="flex gap-3 max-w-4xl transition-all duration-1000 mx-auto">
 
          <BotModes/>
+         
+         <button type="button" onClick={toggleListening}>
+  {isListening ? (
+    <MicOff className="w-4 h-4 text-red-500 animate-pulse" />
+  ) : (
+    <Mic className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+  )}
+</button>
         
-        <div className="relative flex-1">
+        <div className="relative flex-1 ">
+
           <Input
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -61,9 +86,9 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
           size="icon"
           onClick={handleSend}
           disabled={isLoading || !inputValue.trim()}
-          className="h-12 w-12 md:h-14 md:w-14 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-md"
+          className="h-12 w-8 sm:w-12 md:h-14 md:w-14 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-md"
         >
-          <Send className="h-4 w-4 md:h-5 md:w-5" />
+          <Send className="h-2 w-2 md:h-5 md:w-5" />
         </Button>
       </div>
 
