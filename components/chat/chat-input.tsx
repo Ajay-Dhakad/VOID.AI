@@ -45,7 +45,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
   }, [transcript]);
 
   return (
-    <div className="bg-white fixed h-[150px] bottom-0 self-center w-full dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-4 md:p-6 shadow-lg">
+    <div className="bg-white fixed bottom-0 self-center w-full dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-4 md:p-6 shadow-lg">
       <div className="flex gap-3 max-w-4xl transition-all duration-1000 mx-auto">
         <BotModes />
 
