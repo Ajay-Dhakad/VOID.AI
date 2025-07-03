@@ -14,7 +14,7 @@ import { useSpeech } from "@/hooks/useSpeech"
 import VoidLogo from "../voidLooks/voidLogo"
 
 interface MessageBubbleProps {
-  message: Message,
+  message: Message
 }
 
 const MessageBubble = memo<MessageBubbleProps>(({ message }) => {
@@ -164,15 +164,15 @@ const MessageBubble = memo<MessageBubbleProps>(({ message }) => {
   const isUser = message.role === "user"
 
   return (
-    <div className={`flex gap-3 md:gap-4 group ${isUser ? "justify-end" : "justify-start"}`}>
+    <div className={`flex gap-3 w-[100vw] sm:w-full md:gap-4 group ${isUser ? "justify-end" : "justify-start"}`}>
       {!isUser && (
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 hidden md:block">
           <VoidLogo/>
         </div>
       )}
 
       <Card
-        className={`max-w-[85%] md:max-w-[75%] transition-all duration-200 hover:shadow-md ${
+        className={`max-w-[90%] p-2 sm:max-w-[80%] md:max-w-[75%] transition-all duration-200 hover:shadow-md ${
           isUser
             ? "bg-blue-600 text-white border-blue-600 shadow-sm"
             : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm"
