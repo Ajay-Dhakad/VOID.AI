@@ -54,13 +54,13 @@ const ImageDisplay = memo<ImageDisplayProps>(({ imageUrl, prompt }) => {
         {/* Enhanced Header */}
         <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-purple-900/60 via-pink-900/60 to-cyan-900/60 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+            {/* <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
               <Sparkles className="h-4 w-4 text-white animate-pulse" />
             </div>
             <div>
               <span className="text-sm font-semibold text-white">AI Generated Artwork</span>
               <div className="text-xs text-gray-400">Quantum Neural Synthesis</div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300">
