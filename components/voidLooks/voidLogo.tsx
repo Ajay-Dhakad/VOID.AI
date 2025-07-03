@@ -5,7 +5,7 @@ function VoidLogo() {
     <div>
       <img
         className="w-10 h-10 rounded-3xl"
-        src="https://miro.medium.com/v2/resize:fit:1400/1*6RTAH9tceCMXLRC7Z8BB9w.png"
+        src="https://voidcomputing.hu/blog/moving-logo/step6.png"
         alt=""
       />
     </div>

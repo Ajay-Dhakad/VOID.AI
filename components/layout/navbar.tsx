@@ -82,6 +82,7 @@ const Navbar = memo(() => {
 
             {/* Mobile menu button */}
             <div className="md:hidden">
+              <DarkLightComponent />
               <Button
                 onClick={toggleMobileMenu}
                 variant="ghost"
