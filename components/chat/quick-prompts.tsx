@@ -61,14 +61,15 @@ const QuickPrompts = memo<QuickPromptsProps>(({ onPromptSelect }) => {
   return (
     <div className="text-center w-full py-8 md:py-10">
       <>
-    {/* <BlurText
-  text="Welcome To Void! Here are some quick prompts to help you get started."
+  
+    <BlurText
+  text="Here are some quick prompts to help you get started."
   className="text-2xl md:text-4xl font-bold text-center justify-center items-center text-slate-900 dark:text-white"
   animateBy="words"
   direction="top"
-/> */}
+/>
   
-  <TextPressure
+  {/* <TextPressure
     text="I am Void"
     flex={true}
     alpha={false}
@@ -78,9 +79,9 @@ const QuickPrompts = memo<QuickPromptsProps>(({ onPromptSelect }) => {
     italic={true}
     textColor="#000000"
     strokeColor="#000000"
-    className="text-2xl md:text-4xl font-bold text-center justify-center items-center text-slate-900 dark:text-white"
+    className="text-2xl  md:text-4xl font-bold text-center justify-center items-center text-slate-900 dark:text-white"
     minFontSize={36}
-  />
+  /> */}
   <br />
 
 </>

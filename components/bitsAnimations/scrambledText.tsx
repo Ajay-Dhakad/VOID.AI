@@ -194,7 +194,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
                     transformOrigin: 'center top',
                     margin: 0,
                     fontWeight: 100,
-                    color: stroke ? undefined : textColor,
+                    // color: stroke ? undefined : textColor,
                 }}
             >
                 {chars.map((char, i) => (

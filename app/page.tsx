@@ -44,7 +44,7 @@ const AIChat = memo(() => {
   return (
     <div className="min-h-screen bg-slate-50 pb-[110px] sm:pb-[100px] dark:bg-slate-900">
       {/* Subtle background pattern */}
-      <FloatingParticles />
+      {/* <FloatingParticles /> */}
 
       <div className="relative z-10 flex flex-col min-h-screen max-w-7xl mx-auto">
         {/* Navbar */}

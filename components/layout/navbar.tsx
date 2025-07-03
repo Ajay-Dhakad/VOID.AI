@@ -1,10 +1,36 @@
 "use client"
 
-import { memo, useState } from "react"
-import { MessageSquare, Menu, X, History } from "lucide-react"
+import { memo, useEffect, useState } from "react"
+import { MessageSquare, Menu, X, History, SunMoon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { HistoryManager } from "@/components/chat/history-manager"
 import VoidLogo from "../voidLooks/voidLogo"
+import Link from "next/link"
+
+
+const DarkLightComponent = () => {
+  const toggleDarkMode = () => {
+    const htmlElement = document.documentElement
+    if (htmlElement.classList.contains("dark")) {
+      htmlElement.classList.remove("dark")
+      localStorage.setItem("theme", "light")
+    } else {
+      htmlElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
+    }
+  }
+
+  return (
+    <Button
+      onClick={toggleDarkMode}
+      variant="ghost"
+      size="sm"
+      className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+    >
+      <SunMoon className="h-4 w-4" />
+    </Button>
+  )
+}
 
 const Navbar = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -13,6 +39,19 @@ const Navbar = memo(() => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
+
+
+  useEffect(() => {
+
+    const theme = localStorage.getItem("theme")
+    if (theme) {
+      document.documentElement.classList.add(theme)
+    } else {
+      document.documentElement.classList.add("dark")
+    }
+
+  },[])
+
 
   return (
     <>
@@ -23,12 +62,13 @@ const Navbar = memo(() => {
             <div className="flex items-center gap-3">
              <VoidLogo/>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">VOID.<span className="text-red-600 dark:text-slate-300">AI</span></h1>
+                <Link href={'/'} className="text-2xl font-bold text-slate-900 dark:text-white">VOID.<span className="text-red-600 dark:text-red-600">AI</span></Link>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-4">
+              <DarkLightComponent />
               <Button
                 onClick={() => setIsHistoryOpen(true)}
                 variant="ghost"
@@ -48,10 +88,12 @@ const Navbar = memo(() => {
                 size="sm"
                 className="text-slate-600 dark:text-slate-300"
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMobileMenuOpen ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
               </Button>
             </div>
           </div>
+
+        
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
