@@ -32,7 +32,7 @@ export default function RootLayout({
                 speed={1.5}
                 enableShadows={true}
                 enableOnHover={false}
-                className="glitch bg-black"
+                className="glitch bg-black scale-[2]"
                 
 
               >
