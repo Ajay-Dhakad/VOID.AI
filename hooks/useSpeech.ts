@@ -21,9 +21,11 @@ export function useSpeech() {
 
         const voices = window.speechSynthesis.getVoices();
         const preferredVoice = voices.find(
-          (voice) =>
-            voice.lang.includes("en") &&
-            voice.name.toLowerCase().includes("natural")
+          (v) =>
+            v.name.includes("Google UK English Female") ||
+            v.name.includes("Google US English") ||
+            v.name.toLowerCase().includes("natural") ||
+            v.lang === "en-US"
         );
         if (preferredVoice) {
           utterance.voice = preferredVoice;
