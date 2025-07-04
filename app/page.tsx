@@ -25,6 +25,7 @@ const AIChat = memo(() => {
         messagesEndRef.current.scrollIntoView({
           behavior: "smooth",
           block: "center",
+          inline: "nearest",
         });
       }
     };
@@ -75,7 +76,7 @@ const AIChat = memo(() => {
                     )}
                   </div>
                   {messages?.map((message, i) => {
-                    const isLast = i === messages.length - 1;
+                    const isLast = i === messages.length - 2;
                     return (
                       <div key={i} ref={isLast ? messagesEndRef : null}>
                         <MessageBubble message={message} />
