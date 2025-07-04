@@ -90,7 +90,6 @@ const AIChat = memo(() => {
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-600 flex items-center justify-center">
                     <VoidLogo />
                   </div>
-
                   <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm">
                     <div className="flex items-center gap-3">
                       <LoadingDots size="md" />
@@ -103,6 +102,8 @@ const AIChat = memo(() => {
               )}
 
               {/* Invisible element to scroll to */}
+                {isLoading && <div ref={messagesEndRef}></div>}
+
               {/* {messages.length > 0 && <div ref={messagesEndRef} className="h-1" />} */}
             </div>
           </ScrollArea>
