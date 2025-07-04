@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative">
-        <ToastContainer draggable toastClassName={() => 'sm:ml-0 text-black dark:text-white bg-transparent  backdrop-blur-3xl rounded-lg border px-4 py-2 '} autoClose={2000} theme="dark" stacked  limit={1} newestOnTop={true} position="top-center" />
+        <ToastContainer draggable toastClassName={() => 'ml-[20%] sm:ml-0 text-black dark:text-white bg-transparent  backdrop-blur-3xl rounded-lg border px-4 py-2 '} autoClose={2000} theme="dark" stacked  limit={1} newestOnTop={true} position="top-center" />
         {showOverlay ? (
           <div className="fixed inset-0 bg-black z-50 animate-fadeOut">
             <div className="flex items-center justify-center h-full">
