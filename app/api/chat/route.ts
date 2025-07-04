@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
       const encodedPrompt = encodeURIComponent(imagePrompt);
       const randomSeed = Math.floor(Math.random() * 100);
-      const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?enhance=true&nologo=true&model=kontext&seed=${randomSeed}`;
+      const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?enhance=true&nologo=true&model=kontext&seed=${randomSeed}&token=${process.env.AI_API_TOKEN}&referer=${process.env.SITE_BASE_URL}`;
 
       return Response.json({
         message: `🎨 **Image Generated Successfully!**\n\n![Generated Image](${imageUrl})\n\n**Prompt:** ${imagePrompt}\n\n*AI has visualized your request! ✨*`,
@@ -65,8 +65,8 @@ export async function POST(req: Request) {
         headers: {
           Authorization: `Bearer ${process.env.AI_API_TOKEN}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:3000",
-          "X-Title": "AI Assistant",
+          "HTTP-Referer": `${process.env.SITE_BASE_URL}`,
+          "X-Title": "VOID AI",
         },
       }
     );
