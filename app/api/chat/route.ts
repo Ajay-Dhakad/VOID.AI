@@ -77,7 +77,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("API Error:", error);
     return Response.json(
-      { error: "Failed to get AI response" },
+      { error: "Ohh there's something wrong, try again !" },
       { status: 500 }
     );
   }
