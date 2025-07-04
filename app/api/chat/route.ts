@@ -39,7 +39,8 @@ export async function POST(req: Request) {
       }
 
       const encodedPrompt = encodeURIComponent(imagePrompt);
-      const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?nologo=true&quality=high`;
+      const randomSeed = Math.floor(Math.random() * 100);
+      const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?enhance=true&nologo=true&model=kontext&seed=${randomSeed}`;
 
       return Response.json({
         message: `🎨 **Image Generated Successfully!**\n\n![Generated Image](${imageUrl})\n\n**Prompt:** ${imagePrompt}\n\n*AI has visualized your request! ✨*`,
