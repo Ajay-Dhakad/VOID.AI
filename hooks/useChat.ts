@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react"
 import type { Message, ApiResponse } from "@/types/chat"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "react-toastify"
 
 const STORAGE_KEY = "ai-chat-history"
 const MAX_MESSAGES = 100 // Limit to prevent localStorage from getting too large
@@ -10,7 +10,6 @@ const MAX_MESSAGES = 100 // Limit to prevent localStorage from getting too large
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
 
   // Load messages from localStorage on initialization
   useEffect(() => {
@@ -41,11 +40,7 @@ export function useChat() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(messagesToSave))
       } catch (error) {
         console.error("Failed to save chat history:", error)
-        toast({
-          title: "Storage Warning",
-          description: "Unable to save chat history. Storage may be full.",
-          variant: "destructive",
-        })
+        toast('please delete some messages or clear history.')
       }
     }
   }, [messages, toast])
@@ -83,20 +78,13 @@ export function useChat() {
         })
 
         if (!response.ok) {
-   toast({
-          title: "Connection Error",
-          description: "Failed to get AI response. Please try again.",
-          variant: "destructive",
-        })        }
+   toast('some thing went wrong...')        }
 
         const data: ApiResponse = await response.json()
 
         if (data.error) {
-   toast({
-          title: "Connection Error",
-          description: "Failed to get AI response. Please try again.",
-          variant: "destructive",
-        })        }
+   toast(data.error)      
+    }
 
         const aiMessage: Message = {
           id: crypto.randomUUID(),
@@ -111,11 +99,7 @@ export function useChat() {
         setMessages((prev) => [...prev, aiMessage])
       } catch (error) {
         console.error("Chat error:", error)
-        toast({
-          title: "Connection Error",
-          description: "Failed to get AI response. Please try again.",
-          variant: "destructive",
-        })
+        toast('Looks like i am having some issues... please try again later.')
       } finally {
         setIsLoading(false)
       }
@@ -126,10 +110,7 @@ export function useChat() {
   const clearMessages = useCallback(() => {
     setMessages([])
     localStorage.removeItem(STORAGE_KEY)
-    toast({
-      title: "History Cleared",
-      description: "All conversation history has been deleted.",
-    })
+    toast("All conversation history has been deleted.")
   }, [toast])
 
   const exportHistory = useCallback(() => {
@@ -152,16 +133,9 @@ export function useChat() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
 
-      toast({
-        title: "History Exported",
-        description: "Your conversation history has been downloaded.",
-      })
+      toast("Your conversation history has been downloaded.")
     } catch (error) {
-      toast({
-        title: "Export Failed",
-        description: "Unable to export conversation history.",
-        variant: "destructive",
-      })
+      toast("Unable to export conversation history.")
     }
   }, [messages, toast])
 

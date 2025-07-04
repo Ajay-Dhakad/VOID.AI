@@ -12,7 +12,7 @@ import { LoadingDots } from "@/components/ui/loading-dots"
 import { FloatingParticles } from "@/components/ui/floating-particles"
 import { Navbar } from "@/components/layout/navbar"
 import VoidLogo from "@/components/voidLooks/voidLogo"
-
+import { toast } from "react-toastify"
 const AIChat = memo(() => {
   const { messages, isLoading, sendMessage, clearMessages } = useChat()
   const scrollRef = useRef<HTMLDivElement>(null)

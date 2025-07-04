@@ -95,7 +95,7 @@ const ImageDisplay = memo<ImageDisplayProps>(({ imageUrl, prompt }) => {
         </div>
 
         {/* Enhanced Image Container */}
-        <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <div className="relative py-10 bg-gradient-to-br from-gray-900 via-black to-gray-900">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10">
               <div className="flex flex-col items-center gap-4">

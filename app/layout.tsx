@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { useEffect, useState } from "react";
 import GlitchText from "@/components/bitsAnimations/glitchText";
+  import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // export const metadata: Metadata = {
 //   title: 'v0 App',
@@ -25,7 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative">
-        {showOverlay && (
+        <ToastContainer draggable toastClassName={() => 'ml-[40%] sm:ml-0 text-black dark:text-white bg-transparent  backdrop-blur-3xl rounded-lg border px-4 py-2 '} autoClose={2000} theme="dark" stacked  limit={1} newestOnTop={true} position="top-center" />
+        {showOverlay ? (
           <div className="fixed inset-0 bg-black z-50 animate-fadeOut">
             <div className="flex items-center justify-center h-full">
               <GlitchText
@@ -40,8 +43,7 @@ export default function RootLayout({
               </GlitchText>
             </div>
           </div>
-        )}
-        {children}
+        ) : children}
       </body>
     </html>
   );
