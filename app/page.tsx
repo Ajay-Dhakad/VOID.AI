@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { memo, useRef, useEffect } from "react"
-import { Bot, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { useChat } from "@/hooks/useChat"
-import { MessageBubble } from "@/components/chat/message-bubble"
-import { QuickPrompts } from "@/components/chat/quick-prompts"
-import { ChatInput } from "@/components/chat/chat-input"
-import { LoadingDots } from "@/components/ui/loading-dots"
-import { FloatingParticles } from "@/components/ui/floating-particles"
-import { Navbar } from "@/components/layout/navbar"
-import VoidLogo from "@/components/voidLooks/voidLogo"
-import { toast } from "react-toastify"
+import { memo, useRef, useEffect } from "react";
+import { Bot, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useChat } from "@/hooks/useChat";
+import { MessageBubble } from "@/components/chat/message-bubble";
+import { QuickPrompts } from "@/components/chat/quick-prompts";
+import { ChatInput } from "@/components/chat/chat-input";
+import { LoadingDots } from "@/components/ui/loading-dots";
+import { FloatingParticles } from "@/components/ui/floating-particles";
+import { Navbar } from "@/components/layout/navbar";
+import VoidLogo from "@/components/voidLooks/voidLogo";
+import { toast } from "react-toastify";
 const AIChat = memo(() => {
-  const { messages, isLoading, sendMessage, clearMessages } = useChat()
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const { messages, isLoading, sendMessage, clearMessages } = useChat();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Scroll to bottom when messages change or loading state changes
   useEffect(() => {
@@ -25,24 +25,24 @@ const AIChat = memo(() => {
         messagesEndRef.current.scrollIntoView({
           behavior: "smooth",
           block: "end",
-        })
+        });
       }
-    }
+    };
 
     // Small delay to ensure DOM is updated
-    const timeoutId = setTimeout(scrollToBottom, 100)
-    return () => clearTimeout(timeoutId)
-  }, [messages, isLoading])
+    const timeoutId = setTimeout(scrollToBottom, 100);
+    return () => clearTimeout(timeoutId);
+  }, [messages, isLoading]);
 
   // Also scroll when component mounts with existing messages
   useEffect(() => {
     if (messages.length > 0 && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "auto" })
+      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
     }
-  }, [])
+  }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-[110px] sm:pb-[100px] dark:bg-slate-900">
+    <div className="min-h-screen bg-slate-50 pb-[110px] sm:pb-[150px] dark:bg-slate-900">
       {/* Subtle background pattern */}
       {/* <FloatingParticles /> */}
 
@@ -59,7 +59,9 @@ const AIChat = memo(() => {
               ) : (
                 <>
                   <div className="flex justify-between items-center">
-                    <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Conversation</h2>
+                    <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+                      Conversation
+                    </h2>
                     {messages.length > 0 && (
                       <Button
                         onClick={clearMessages}
@@ -72,29 +74,36 @@ const AIChat = memo(() => {
                       </Button>
                     )}
                   </div>
-                  {messages.map((message,i) => (
-                    <MessageBubble key={message.id} message={message} />
-                  ))}
+                  {messages?.map((message, i) => {
+                    const isLast = i === messages.length - 1;
+                    return (
+                      <div key={i} ref={isLast ? messagesEndRef : null}>
+                        <MessageBubble message={message} />
+                      </div>
+                    );
+                  })}
                 </>
               )}
 
               {isLoading && (
-                <div  className="flex gap-4">
+                <div className="flex gap-4">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-600 flex items-center justify-center">
-                  <VoidLogo/>
-                    </div>
+                    <VoidLogo />
+                  </div>
 
                   <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm">
                     <div className="flex items-center gap-3">
                       <LoadingDots size="md" />
-                      <span className="text-sm text-slate-700 dark:text-slate-200 font-medium">Void is thinking...</span>
+                      <span className="text-sm text-slate-700 dark:text-slate-200 font-medium">
+                        Void is thinking...
+                      </span>
                     </div>
                   </div>
                 </div>
               )}
 
               {/* Invisible element to scroll to */}
-              {messages.length > 0 && <div ref={messagesEndRef} className="h-1" />}
+              {/* {messages.length > 0 && <div ref={messagesEndRef} className="h-1" />} */}
             </div>
           </ScrollArea>
 
@@ -103,11 +112,11 @@ const AIChat = memo(() => {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-AIChat.displayName = "AIChat"
+AIChat.displayName = "AIChat";
 
 export default function Page() {
-  return <AIChat />
+  return <AIChat />;
 }
