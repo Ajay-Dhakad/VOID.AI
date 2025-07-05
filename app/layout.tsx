@@ -34,6 +34,7 @@ export default function RootLayout({
         />
         <meta name="author" content="Ajay Dhakad" />
         <meta name="robots" content="index, follow" />
+        <meta name="google-site-verification" content="BagJjuoQ5SJ-HGEfrz_jImPCrp5tu5p7kxmBFmt8wYs" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
