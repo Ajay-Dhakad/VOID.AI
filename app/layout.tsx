@@ -21,7 +21,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
+      <head>
         <title>VOID – Your Personal AI Companion</title>
         <meta name="title" content="VOID – Your Personal AI Companion" />
         <meta
@@ -60,7 +60,7 @@ export default function RootLayout({
         <meta property="twitter:image" content="https://thevoidai.vercel.app/" />
 
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </head>
 
       <body className="relative">
         <ToastContainer
