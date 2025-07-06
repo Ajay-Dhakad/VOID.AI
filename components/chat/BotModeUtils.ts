@@ -30,11 +30,11 @@ export const Personalities = [
 
 export const botModels = [
     {
-        name: "VOID(Perfect)😁",
+        name: "VOID(Best)😁",
         value: "openai-large"
     },
     {
-        name: "VOID(realtime data & web search)💡",
+        name: "VOID(Realtime Data & Web Search)💡",
         value: "searchgpt"
     },
     {
