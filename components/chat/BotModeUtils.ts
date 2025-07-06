@@ -30,17 +30,29 @@ export const Personalities = [
 
 export const botModels = [
     {
-        name: "VOID(large LLM)😁",
+        name: "VOID(Perfect)😁",
         value: "openai-large"
     },
     {
-        name: "VOID(realtime web search)💡",
+        name: "VOID(realtime data & web search)💡",
         value: "searchgpt"
     },
     {
         name: "VOID(Uncensored)😶‍🌫️",
         value: "evil"
     },
+     {
+    name: "VOID (Reasoning Pro) 🧠",
+    value: "deepseek-reasoning"
+  },
+  {
+    name: "VOID (Code Genius) 🔧",
+    value: "qwen-coder"
+  },
+  {
+    name: "VOID (Fast & Light) ⚡",
+    value: "phi"
+  }
    
 ]
 
