@@ -39,7 +39,7 @@ export const botModels = [
     },
     {
         name: "VOID(Uncensored)😶‍🌫️",
-        value: "unity"
+        value: "evil"
     },
    
 ]
