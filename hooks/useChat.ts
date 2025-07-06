@@ -93,25 +93,25 @@ export function useChat() {
 
     console.log("Response Content-Type:", contentType);
 
- if (!contentType.includes("text/plain")) {
+//  if (!contentType.includes("text/plain")) {
 
-        const data = await response.json();
+//         const data = await response.json();
 
-          const aiMessage: Message = {
-            id: crypto.randomUUID(),
-            role: "assistant",
-            content: data.message,
-            timestamp: new Date(),
-            isImage: true,
-            imageUrl: data.imageUrl,
-            imagePrompt: data.imagePrompt,
-          };
+//           const aiMessage: Message = {
+//             id: crypto.randomUUID(),
+//             role: "assistant",
+//             content: data.message,
+//             timestamp: new Date(),
+//             isImage: true,
+//             imageUrl: data.imageUrl,
+//             imagePrompt: data.imagePrompt,
+//           };
 
-          setMessages((prev) => [...prev, aiMessage]);
+//           setMessages((prev) => [...prev, aiMessage]);
 
-        setIsLoading(false);
-        return;
-      }
+//         setIsLoading(false);
+//         return;
+//       }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
@@ -170,7 +170,7 @@ while (true) {
           return updated;
         });
 
-         await new Promise((r) => setTimeout(r, 20));
+         await new Promise((r) => setTimeout(r, 10));
 
       }
     } catch (err) {

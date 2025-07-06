@@ -3,51 +3,53 @@ import { GetBotPersonality } from "./botModes/BotModes";
 export async function POST(req: Request) {
   try {
     const { messages, model, personality } = await req.json();
-    const lastMessage = messages[messages.length - 1]?.content || "";
+    // const lastMessage = messages[messages.length - 1]?.content || "";
 
-    console.log("Received messages:", model);
+    // console.log("Received messages:", model);
 
-    const imageKeywords = [
-      "generate image",
-      "create image",
-      "make image",
-      "draw",
-      "picture of",
-      "image of",
-      "show me",
-      "visualize",
-      "illustration",
-      "artwork",
-      "photo of",
-    ];
+    // const imageKeywords = [
+    //   "generate image",
+    //   "create image",
+    //   "make image",
+    //   "draw",
+    //   "picture of",
+    //   "image of",
+    //   "show me",
+    //   "visualize",
+    //   "illustration",
+    //   "artwork",
+    //   "photo of",
+    // ];
 
-    const isImageRequest = imageKeywords.some((keyword) =>
-      lastMessage.toLowerCase().includes(keyword)
-    );
+    // const isImageRequest = imageKeywords.some((keyword) =>
+    //   lastMessage.toLowerCase().includes(keyword)
+    // );
 
-    if (isImageRequest) {
-      let imagePrompt = lastMessage
-        .replace(
-          /generate image of|create image of|make image of|draw|picture of|image of|show me|visualize|illustration of|artwork of|photo of/gi,
-          ""
-        )
-        .trim();
+    // if (isImageRequest) {
+    //   let imagePrompt = lastMessage
+    //     .replace(
+    //       /generate image of|create image of|make image of|draw|picture of|image of|show me|visualize|illustration of|artwork of|photo of/gi,
+    //       ""
+    //     )
+    //     .trim();
 
-      if (!imagePrompt) {
-        imagePrompt = lastMessage;
-      }
+    //   if (!imagePrompt) {
+    //     imagePrompt = lastMessage;
+    //   }
 
-      const encodedPrompt = encodeURIComponent(imagePrompt);
-      const randomSeed = Math.floor(Math.random() * 100);
-      const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?enhance=true&nologo=true&model=kontext&seed=${randomSeed}&token=${process.env.AI_API_TOKEN}&referer=${process.env.SITE_BASE_URL}`;
+    //   console.log("Image request detected:", imagePrompt);
 
-      return Response.json({
-        message: `🎨 **Image Generated Successfully!**\n\n![Generated Image](${imageUrl})\n\n**Prompt:** ${imagePrompt}\n\n*AI has visualized your request! ✨*`,
-        isImage: true,
-        imageUrl: imageUrl,
-        imagePrompt: imagePrompt,
-      });
-    }
+    //   const encodedPrompt = encodeURIComponent(imagePrompt);
+    //   const randomSeed = Math.floor(Math.random() * 100);
+    //   const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?enhance=true&nologo=true&model=kontext&seed=${randomSeed}&token=${process.env.AI_API_TOKEN}&referer=${process.env.SITE_BASE_URL}`;
+
+    //   return Response.json({
+    //     message: `🎨 **Image Generated Successfully!**\n\n![Generated Image](${imageUrl})\n\n**Prompt:** ${imagePrompt}\n\n*AI has visualized your request! ✨*`,
+    //     isImage: true,
+    //     imageUrl: imageUrl,
+    //     imagePrompt: imagePrompt,
+    //   });
+    // }
 
     // Prepare streaming request to pollinations.ai
     const upstreamResponse = await fetch("https://text.pollinations.ai/openai", {
