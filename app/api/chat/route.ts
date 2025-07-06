@@ -1,14 +1,12 @@
-import axios from "axios";
 import { GetBotPersonality } from "./botModes/BotModes";
 
 export async function POST(req: Request) {
   try {
-    const { messages, model,personality } = await req.json();
+    const { messages, model, personality } = await req.json();
     const lastMessage = messages[messages.length - 1]?.content || "";
 
     console.log("Received messages:", model);
 
-    // Check if user is requesting image generation
     const imageKeywords = [
       "generate image",
       "create image",
@@ -28,7 +26,6 @@ export async function POST(req: Request) {
     );
 
     if (isImageRequest) {
-
       let imagePrompt = lastMessage
         .replace(
           /generate image of|create image of|make image of|draw|picture of|image of|show me|visualize|illustration of|artwork of|photo of/gi,
@@ -52,35 +49,62 @@ export async function POST(req: Request) {
       });
     }
 
-    const response = await axios.post(
-      "https://text.pollinations.ai/openai",
-      {
+    // Prepare streaming request to pollinations.ai
+    const upstreamResponse = await fetch("https://text.pollinations.ai/openai", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.AI_API_TOKEN}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer":`${process.env.SITE_BASE_URL}`,
+        "X-Title": "VOID AI",
+      },
+      body: JSON.stringify({
         model: model || "openai-large",
+        stream: true,
         messages: [
           {
             role: "system",
             content: await GetBotPersonality(personality?.toLowerCase() || "void"),
-          }, 
+          },
           ...messages,
         ],
+      }),
+    });
+
+    if (!upstreamResponse.ok || !upstreamResponse.body) {
+      return new Response("Upstream failed", { status: 502 });
+    }
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = upstreamResponse.body!.getReader();
+        const decoder = new TextDecoder("utf-8");
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          const textChunk = decoder.decode(value);
+          controller.enqueue(encoder.encode(textChunk));
+        }
+
+        controller.close();
       },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.AI_API_TOKEN}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": `${process.env.SITE_BASE_URL}`,
-          "X-Title": "VOID AI",
-        },
-      }
-    );
+    });
 
-    const reply = response.data.choices[0].message.content;
-
-    return Response.json({ message: reply });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
+    });
   } catch (error) {
     console.error("API Error:", error);
     return Response.json(
-      { error: "Ohh there's something wrong, try again !" },
+      { error: "Ohh there's something wrong, try again!" },
       { status: 500 }
     );
   }

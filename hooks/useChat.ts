@@ -44,68 +44,112 @@ export function useChat() {
       }
     }
   }, [messages, toast])
+  
+
 
   const sendMessage = useCallback(
-    async (content: string): Promise<void> => {
-      if (!content.trim()) return
+  async (content: string): Promise<void> => {
+    if (!content.trim()) return;
 
-      const userMessage: Message = {
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: "user",
+      content: content.trim(),
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setIsLoading(true);
+
+    const conversationHistory = [...messages, userMessage];
+    const recentHistory = conversationHistory.slice(-20);
+
+    const apiMessages = recentHistory.map(({ role, content }) => ({
+      role,
+      content,
+    }));
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: apiMessages,
+          model: localStorage.getItem("model") || "",
+          stream: true,
+        }),
+      });
+
+      if (!response.ok || !response.body) {
+        toast("Something went wrong...");
+        return;
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let aiContent = "";
+
+      const aiMessage: Message = {
         id: crypto.randomUUID(),
-        role: "user",
-        content: content.trim(),
+        role: "assistant",
+        content: "",
         timestamp: new Date(),
-      }
+      };
 
-      setMessages((prev) => [...prev, userMessage])
-      setIsLoading(true)
+      setMessages((prev) => [...prev, aiMessage]);
 
-      try {
-        // Include conversation history for context
-        const conversationHistory = [...messages, userMessage]
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
 
-        // Send only the last 20 messages to avoid token limits
-        const recentHistory = conversationHistory.slice(-20)
+        const chunk = decoder.decode(value, { stream: true });
 
-        const apiMessages = recentHistory.map(({ role, content }) => ({
-          role,
-          content,
-        }))
+        const lines = chunk.split("\n").filter((line) =>
+          line.startsWith("data:")
+        );
 
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: apiMessages,model: localStorage.getItem("model") || '' }),
-        })
+        for (const line of lines) {
+          const jsonStr = line.replace("data:", "").trim();
 
-        if (!response.ok) {
-   toast('some thing went wrong...')        }
+          if (jsonStr === "[DONE]") break;
 
-        const data: ApiResponse = await response.json()
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const contentPiece = parsed.choices?.[0]?.delta?.content;
 
-        if (data.error) {
-   toast(data.error)      
-    }
+            if (contentPiece) {
+              aiContent += contentPiece;
 
-        const aiMessage: Message = {
-          id: crypto.randomUUID(),
-          role: "assistant",
-          content: data.message,
-          timestamp: new Date(),
-          isImage: data.isImage,
-          imageUrl: data.imageUrl,
-          imagePrompt: data.imagePrompt,
+              setMessages((prev) => {
+                const updated = [...prev];
+                const lastIndex = updated.findLastIndex(
+                  (m) => m.role === "assistant"
+                );
+                if (lastIndex !== -1) {
+                  updated[lastIndex] = {
+                    ...updated[lastIndex],
+                    content: aiContent,
+                  };
+                }
+                return updated;
+              });
+            }
+          } catch (err) {
+            console.error("❌ Stream parse error:", jsonStr, err);
+          }
         }
-
-        setMessages((prev) => [...prev, aiMessage])
-      } catch (error) {
-        console.error("Chat error:", error)
-        toast('Looks like i am having some issues... please try again later.')
-      } finally {
-        setIsLoading(false)
       }
-    },
-    [messages, toast],
-  )
+    } catch (error) {
+      console.error("Chat error:", error);
+      toast("Looks like I’m having some issues... please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  },
+  [messages, toast]
+);
+
+
 
   const clearMessages = useCallback(() => {
     setMessages([])
