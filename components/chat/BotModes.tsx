@@ -24,7 +24,7 @@ function BotModels() {
 
   return (
     <>
-     <select value={model} onChange={(e) => handleModelChange(e.target.value)} className="p-3 appearance-none hover:w-auto transition-all duration-1000 border w-0 sm:w-auto bg-slate-50 border-slate-200 dark:border-slate-700 dark:bg-slate-700 rounded-md " name="mode" id="">
+     <select value={model} onChange={(e) => handleModelChange(e.target.value)} className="p-3 appearance-none hover:w-5 sm:hover:w-auto transition-all duration-1000 border w-0 sm:w-auto bg-slate-50 border-slate-200 dark:border-slate-700 dark:bg-slate-700 rounded-md " name="mode" id="">
         {botModels?.map((botModel:any) => 
           <option key={botModel.value} value={botModel.value}>
             {botModel.name}
