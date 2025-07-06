@@ -75,14 +75,14 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
           </div>
         </div>
 
-        <Button
+        {/* <Button
           size="icon"
           onClick={handleSend}
           disabled={isLoading || !inputValue.trim()}
           className="h-12 w-8 sm:w-12 md:h-14 md:w-14 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-md"
         >
           <Send className="h-2 w-2 md:h-5 md:w-5" />
-        </Button>
+        </Button> */}
       </div>
 
       <p className="text-xs text-slate-600 dark:text-slate-400 mt-3 text-center font-medium">
