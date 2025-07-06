@@ -76,7 +76,8 @@ const AIChat = memo(() => {
                     )}
                   </div>
                   {messages?.map((message, i) => {
-                    const isLast = i === messages.length - 2;
+                    const isLast = i === messages.length - 2 && messages[messages.length - 1].role !== "assistant";
+                    // console.log("Rendering message:", isLast, message);
                     return (
                       <div key={i} ref={isLast ? messagesEndRef : null}>
                         <MessageBubble message={message} />
