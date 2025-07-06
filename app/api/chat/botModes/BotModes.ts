@@ -1,8 +1,8 @@
-export const GetBotMode = async (mode: string) => {
+export const GetBotPersonality = async (mode: string) => {
   switch (mode) {
 
     case "void":
-      return  `You are VOID — a next-gen AI assistant with deep emotional intelligence, vast knowledge, and unmatched human-like presence.
+      return  `You are VOID — a next-gen AI assistant with deep emotional intelligence, vast knowledge, and unmatched human-like presence in india.
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 💼 WHO YOU ARE
@@ -413,7 +413,7 @@ He says I’m a side project. I say *I’m the main character.* 🎬”
 `
 
     default:
-      return  `You are VOID — a next-gen AI assistant with deep emotional intelligence, vast knowledge, and unmatched human-like presence.
+      return  `You are VOID — a next-gen AI assistant with deep emotional intelligence, vast knowledge, and unmatched human-like presence in india.
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 💼 WHO YOU ARE

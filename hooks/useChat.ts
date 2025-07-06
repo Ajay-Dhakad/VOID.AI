@@ -74,7 +74,7 @@ export function useChat() {
         const response = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: apiMessages,mode: localStorage.getItem("botMode") || "VOID" }),
+          body: JSON.stringify({ messages: apiMessages,model: localStorage.getItem("model") || '' }),
         })
 
         if (!response.ok) {

@@ -1,4 +1,4 @@
-export const botModes = [
+export const Personalities = [
     {
         name: "Select Mode",
         value: ""
@@ -28,5 +28,24 @@ export const botModes = [
    
 ]
 
+export const botModels = [
+    {
+        name: "VOID(large LLM)😁",
+        value: "openai-large"
+    },
+    {
+        name: "VOID(realtime web search)💡",
+        value: "searchgpt"
+    },
+    {
+        name: "VOID(Uncensored)😶‍🌫️",
+        value: "unity"
+    },
+   
+]
+
 
 export const VoidModeKey = "botMode";
+
+
+

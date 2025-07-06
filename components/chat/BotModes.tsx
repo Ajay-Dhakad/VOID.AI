@@ -1,33 +1,33 @@
 import React, { useEffect } from 'react'
-import { botModes } from './BotModeUtils';
+import { botModels } from './BotModeUtils';
 
-function BotModes() {
+function BotModels() {
 
-  const [mode, setMode] = React.useState<string>("");
+  const [model, setModel] = React.useState<string>("");
   
 
   useEffect(() => {
 
-    const savedMode = localStorage.getItem('botMode');
-    if (savedMode) {
-      setMode(savedMode);
+    const savedModel = localStorage.getItem('model');
+    if (savedModel) {
+      setModel(savedModel);
     }else{
-      setMode("void");
+      setModel("");
     }
 
   },[])
 
-  const handleModeChange = (newMode: string) => {
-    setMode(newMode);
-    localStorage.setItem('botMode', newMode);
+  const handleModelChange = (newModel: string) => {
+    setModel(newModel);
+    localStorage.setItem('model', newModel);
   };
 
   return (
     <>
-     <select value={mode} onChange={(e) => handleModeChange(e.target.value)} className="p-3 appearance-none hover:w-auto transition-all duration-1000 border w-0 sm:w-auto bg-slate-50 border-slate-200 dark:border-slate-700 dark:bg-slate-700 rounded-md " name="mode" id="">
-        {botModes?.map((botMode:any) => 
-          <option key={botMode.value} value={botMode.value}>
-            {botMode.name}
+     <select value={model} onChange={(e) => handleModelChange(e.target.value)} className="p-3 appearance-none hover:w-auto transition-all duration-1000 border w-0 sm:w-auto bg-slate-50 border-slate-200 dark:border-slate-700 dark:bg-slate-700 rounded-md " name="mode" id="">
+        {botModels?.map((botModel:any) => 
+          <option key={botModel.value} value={botModel.value}>
+            {botModel.name}
           </option>
         )}
           </select>
@@ -36,4 +36,4 @@ function BotModes() {
   )
 }
 
-export default BotModes
+export default BotModels

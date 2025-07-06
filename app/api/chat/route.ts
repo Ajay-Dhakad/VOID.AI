@@ -1,10 +1,12 @@
 import axios from "axios";
-import { GetBotMode } from "./botModes/BotModes";
+import { GetBotPersonality } from "./botModes/BotModes";
 
 export async function POST(req: Request) {
   try {
-    const { messages, mode } = await req.json();
+    const { messages, model,personality } = await req.json();
     const lastMessage = messages[messages.length - 1]?.content || "";
+
+    console.log("Received messages:", model);
 
     // Check if user is requesting image generation
     const imageKeywords = [
@@ -53,11 +55,12 @@ export async function POST(req: Request) {
     const response = await axios.post(
       "https://text.pollinations.ai/openai",
       {
+        model: model || "openai-large",
         messages: [
           {
             role: "system",
-            content: await GetBotMode(mode?.toLowerCase() || "void"),
-          },
+            content: await GetBotPersonality(personality?.toLowerCase() || "void"),
+          }, 
           ...messages,
         ],
       },
