@@ -88,6 +88,31 @@ export function useChat() {
         return;
       }
 
+    const contentType = response.headers.get("Content-Type") || "";
+
+
+    console.log("Response Content-Type:", contentType);
+
+ if (!contentType.includes("text/plain")) {
+
+        const data = await response.json();
+
+          const aiMessage: Message = {
+            id: crypto.randomUUID(),
+            role: "assistant",
+            content: data.message,
+            timestamp: new Date(),
+            isImage: true,
+            imageUrl: data.imageUrl,
+            imagePrompt: data.imagePrompt,
+          };
+
+          setMessages((prev) => [...prev, aiMessage]);
+
+        setIsLoading(false);
+        return;
+      }
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let aiContent = "";
@@ -144,6 +169,9 @@ while (true) {
           }
           return updated;
         });
+
+         await new Promise((r) => setTimeout(r, 20));
+
       }
     } catch (err) {
       console.error("❌ Stream parse error:", jsonStr, err);
@@ -152,7 +180,7 @@ while (true) {
 }
     } catch (error) {
       console.error("Chat error:", error);
-      toast("Looks like I’m having some issues... please try again later.");
+      toast("Oops! Something went wrong. Please try again later.");
     } finally {
       setIsLoading(false);
     }
