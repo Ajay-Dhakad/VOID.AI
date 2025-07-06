@@ -47,6 +47,9 @@ export function useChat() {
   
 
 
+
+
+
   const sendMessage = useCallback(
   async (content: string): Promise<void> => {
     if (!content.trim()) return;
@@ -98,47 +101,55 @@ export function useChat() {
 
       setMessages((prev) => [...prev, aiMessage]);
 
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
+      let buffer = "";
 
-        const chunk = decoder.decode(value, { stream: true });
+while (true) {
+  const { value, done } = await reader.read();
+  if (done) break;
 
-        const lines = chunk.split("\n").filter((line) =>
-          line.startsWith("data:")
-        );
+  buffer += decoder.decode(value, { stream: true });
 
-        for (const line of lines) {
-          const jsonStr = line.replace("data:", "").trim();
+  let lines = buffer.split("\n");
 
-          if (jsonStr === "[DONE]") break;
+  buffer = lines.pop() || "";
 
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const contentPiece = parsed.choices?.[0]?.delta?.content;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith("data:")) continue;
 
-            if (contentPiece) {
-              aiContent += contentPiece;
+    const jsonStr = trimmed.replace("data:", "").trim();
 
-              setMessages((prev) => {
-                const updated = [...prev];
-                const lastIndex = updated.findLastIndex(
-                  (m) => m.role === "assistant"
-                );
-                if (lastIndex !== -1) {
-                  updated[lastIndex] = {
-                    ...updated[lastIndex],
-                    content: aiContent,
-                  };
-                }
-                return updated;
-              });
-            }
-          } catch (err) {
-            console.error("❌ Stream parse error:", jsonStr, err);
+    if (jsonStr === "[DONE]") {
+      buffer = "";
+      break;
+    }
+
+    try {
+      const parsed = JSON.parse(jsonStr);
+      const contentPiece = parsed.choices?.[0]?.delta?.content;
+
+      if (contentPiece) {
+        aiContent += contentPiece;
+
+        setMessages((prev) => {
+          const updated = [...prev];
+          const lastIndex = updated.findLastIndex(
+            (m) => m.role === "assistant"
+          );
+          if (lastIndex !== -1) {
+            updated[lastIndex] = {
+              ...updated[lastIndex],
+              content: aiContent,
+            };
           }
-        }
+          return updated;
+        });
       }
+    } catch (err) {
+      console.error("❌ Stream parse error:", jsonStr, err);
+    }
+  }
+}
     } catch (error) {
       console.error("Chat error:", error);
       toast("Looks like I’m having some issues... please try again later.");

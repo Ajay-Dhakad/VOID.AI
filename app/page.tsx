@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useRef, useEffect } from "react";
+import { memo, useRef, useEffect, useState } from "react";
 import { Bot, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,6 +17,7 @@ const AIChat = memo(() => {
   const { messages, isLoading, sendMessage, clearMessages } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [initialScroll, setInitialScroll] = useState(false);
 
   // Scroll to bottom when messages change or loading state changes
   useEffect(() => {
@@ -37,10 +38,11 @@ const AIChat = memo(() => {
 
   // Also scroll when component mounts with existing messages
   useEffect(() => {
-    if (messages.length > 0 && messagesEndRef.current) {
+    if (messages.length > 0 && messagesEndRef.current && !initialScroll) {
       messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+      setInitialScroll(true);
     }
-  }, []);
+  }, [messages]);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-[150px] dark:bg-slate-900">
@@ -76,7 +78,9 @@ const AIChat = memo(() => {
                     )}
                   </div>
                   {messages?.map((message, i) => {
-                    const isLast = i === messages.length - 2 && messages[messages.length - 1].role !== "assistant";
+                    const isLast =
+                      i === messages.length - 2 &&
+                      messages[messages.length - 1].role !== "assistant";
                     // console.log("Rendering message:", isLast, message);
                     return (
                       <div key={i} ref={isLast ? messagesEndRef : null}>
@@ -104,13 +108,13 @@ const AIChat = memo(() => {
               )}
 
               {/* Invisible element to scroll to */}
-                {isLoading && <div ref={messagesEndRef}></div>}
-
-              {/* {messages.length > 0 && <div ref={messagesEndRef} className="h-1" />} */}
+              {isLoading && <div ref={messagesEndRef}></div>}
             </div>
           </ScrollArea>
+         
 
           {/* Chat Input */}
+            <div ref={!initialScroll && messages.length > 0 ? messagesEndRef : null} className="h-1" />
           <ChatInput onSend={sendMessage} isLoading={isLoading} />
         </div>
       </div>
