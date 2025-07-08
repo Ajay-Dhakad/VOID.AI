@@ -31,33 +31,39 @@ export const Personalities = [
 export const botModels = [
     {
         name: "VOID(Best)😁",
-        value: "openai-large"
+        value: "openai-large",
+        active:true
     },
     {
         name: "VOID(Realtime Data & Web Search)💡",
-        value: "searchgpt"
+        value: "searchgpt",
+        active:false
     },
     {
         name: "VOID(Uncensored)😶‍🌫️",
-        value: "evil"
+        value: "evil",
+        active:false
     },
      {
     name: "VOID (Reasoning Pro) 🧠",
-    value: "deepseek-reasoning"
+    value: "deepseek-reasoning",
+    active:true
   },
   {
     name: "VOID (Code Genius) 🔧",
-    value: "qwen-coder"
+    value: "qwen-coder",
+    active:false
   },
   {
     name: "VOID (Fast & Light) ⚡",
-    value: "phi"
+    value: "phi",
+    active:true
   }
    
 ]
 
 
-export const VoidModeKey = "botMode";
+export const VoidModelKey = "model";
 
 
 
