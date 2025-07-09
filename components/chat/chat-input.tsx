@@ -118,7 +118,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
                   onClick={() => setImageUrl("")}
                   className="absolute top-0 right-0 w-4 h-4 text-red-500"
                 />
-                <img src={imageUrl} className=" h-full  rounded-sm" alt="" />
+                <img src={imageUrl} className=" h-full w-full  rounded-sm" alt="" />
               </>
             ) : (
               <Image
@@ -131,6 +131,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
               onChange={handleImageUpload}
               className="hidden"
               type="file"
+              accept="image/*"
               name="photo"
               id=""
             />
