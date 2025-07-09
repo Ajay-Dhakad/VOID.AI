@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     const { messages, model, personality } = await req.json();
     // const lastMessage = messages[messages.length - 1]?.content || "";
 
-    // console.log("Received messages:", model);
+    console.log("Received messages:", messages);
 
     // const imageKeywords = [
     //   "generate image",

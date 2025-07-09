@@ -289,8 +289,14 @@ code({ inline, className, children, ...props }: any) {
               </ReactMarkdown>
             </div>
           ) : (
-            <div className="whitespace-pre-wrap text-sm md:text-base leading-relaxed font-medium text-white">
-              {message.content}
+            <div className="whitespace-pre-wrap  text-sm md:text-base leading-relaxed font-medium text-white">
+              {Array.isArray(message.content) ? message.content?.map((cont) =>{
+                return (
+                 <div className="flex flex-col justify-center items-center">
+                  {cont.type == 'image_url' ? <ImageDisplay imageUrl={cont?.image_url?.url} prompt=""  /> : cont.text}
+                 </div>
+                )
+              }) : message.content}
             </div>
           )}
 

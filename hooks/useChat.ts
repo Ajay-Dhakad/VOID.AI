@@ -51,10 +51,19 @@ export function useChat() {
 
 
   const sendMessage = useCallback(
-  async (content: string): Promise<void> => {
-    if (!content.trim()) return;
+  async (content: any): Promise<void> => {
 
-    const userMessage: Message = {
+    let userMessage:Message
+
+    if (!content) {
+      return;
+    }
+      userMessage = Array.isArray(content) ? {
+        id: crypto.randomUUID(),
+        role: "user",
+        content: [...content],
+        timestamp: new Date(),
+      } : {
       id: crypto.randomUUID(),
       role: "user",
       content: content.trim(),

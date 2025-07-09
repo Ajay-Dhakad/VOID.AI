@@ -126,11 +126,11 @@ const ImageDisplay = memo<ImageDisplayProps>(({ imageUrl, prompt }) => {
         </div>
 
         {/* Enhanced Prompt Display */}
-        <div className="px-4 py-3 bg-gradient-to-r from-black/40 to-black/20 backdrop-blur-sm">
+     {prompt &&  <div className="px-4 py-3 bg-gradient-to-r from-black/40 to-black/20 backdrop-blur-sm">
           <p className="text-xs text-gray-300 leading-relaxed">
             <span className="text-purple-400 font-semibold">Prompt:</span> <span className="italic">{prompt}</span>
           </p>
-        </div>
+        </div>}
       </div>
 
       {/* Enhanced Fullscreen Modal */}
@@ -142,7 +142,7 @@ const ImageDisplay = memo<ImageDisplayProps>(({ imageUrl, prompt }) => {
           <div className="relative max-w-6xl max-h-full">
             <img
               src={imageUrl || "/placeholder.svg"}
-              alt={prompt}
+              alt={prompt || ''}
               className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
             />
             <Button

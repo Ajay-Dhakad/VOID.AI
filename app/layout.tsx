@@ -67,7 +67,7 @@ export default function RootLayout({
           draggable
           closeOnClick
           toastClassName={() =>
-            "ml-[20%] mt-5 sm:ml-0 text-black dark:text-white bg-transparent backdrop-blur-3xl rounded-lg border px-4 py-2"
+            "ml-[20%] mt-5 sm:ml-0 flex px-4 py-3 text-black dark:text-white bg-transparent backdrop-blur-3xl rounded-lg border"
           }
           autoClose={2000}
           theme="dark"
