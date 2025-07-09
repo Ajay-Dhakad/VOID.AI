@@ -111,7 +111,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
         </button>
 
         <div className="relative flex-1 ">
-          <div className="absolute transition-all delay-1000 hover:cursor-pointer top-1/2 -translate-y-1/2 left-[-5px] h-full w-12 flex items-center justify-center">
+          <div className="absolute transition-all delay-1000 hover:cursor-pointer top-1/2 -translate-y-1/2 left-0 h-full w-12 flex items-center justify-center">
             {imageUrl ? (
               <>
                 <X
