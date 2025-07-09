@@ -290,9 +290,9 @@ code({ inline, className, children, ...props }: any) {
             </div>
           ) : (
             <div className="whitespace-pre-wrap  text-sm md:text-base leading-relaxed font-medium text-white">
-              {Array.isArray(message.content) ? message.content?.map((cont) =>{
+              {Array.isArray(message.content) ? message.content?.map((cont,i) =>{
                 return (
-                 <div className="flex flex-col justify-center items-center">
+                 <div key={i} className="">
                   {cont.type == 'image_url' ? <ImageDisplay imageUrl={cont?.image_url?.url} prompt=""  /> : cont.text}
                  </div>
                 )

@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { memo, useState, useCallback, useEffect, useRef } from "react";
-import { Send, Loader2, MicOff, Mic, Image } from "lucide-react";
+import { Send, Loader2, MicOff, Mic, Image, Cross, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import BotModes from "./BotModes";
@@ -20,8 +20,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
   const imageRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState("");
 
-  console.log(imageUrl,'image');
-
+  console.log(imageUrl, "image");
 
   const handleSend = useCallback(() => {
     if (inputValue.trim() && !isLoading && !imageUrl) {
@@ -30,14 +29,13 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
     }
     if (imageUrl && !isLoading && inputValue) {
       onSend([
-        { type: "image_url", image_url: {url:imageUrl} },
+        { type: "image_url", image_url: { url: imageUrl } },
         { type: "text", text: inputValue },
       ]);
       setImageUrl("");
       setInputValue("");
     }
-  }, [inputValue, imageUrl,isLoading, onSend]);
-
+  }, [inputValue, imageUrl, isLoading, onSend]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -113,11 +111,21 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
         </button>
 
         <div className="relative flex-1 ">
-          <div className="absolute hover:cursor-pointer top-1/2 -translate-y-1/2 left-[-5px] h-full w-12 flex items-center justify-center">
-            <Image
-              onClick={handleImageUploadClick}
-              className="w-5 h-5 text-black dark:text-white"
-            />
+          <div className="absolute transition-all delay-1000 hover:cursor-pointer top-1/2 -translate-y-1/2 left-[-5px] h-full w-12 flex items-center justify-center">
+            {imageUrl ? (
+              <>
+                <X
+                  onClick={() => setImageUrl("")}
+                  className="absolute top-0 right-0 w-4 h-4 text-red-500"
+                />
+                <img src={imageUrl} className=" h-full  rounded-sm" alt="" />
+              </>
+            ) : (
+              <Image
+                onClick={handleImageUploadClick}
+                className="w-5 h-5 text-black dark:text-white"
+              />
+            )}
             <input
               ref={imageRef}
               onChange={handleImageUpload}
@@ -133,7 +141,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
             onKeyDown={handleKeyDown}
             placeholder="Type your message or 'generate image of...' to create images"
             disabled={isLoading}
-            className="pr-12 h-12 md:h-14 text-sm md:text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 focus:border-blue-500 dark:focus:border-blue-400"
+            className="pr-12 pl-12 h-12 md:h-14 text-sm md:text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 focus:border-blue-500 dark:focus:border-blue-400"
           />
 
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -153,14 +161,6 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
           <Send className="h-2 w-2 md:h-5 md:w-5" />
         </Button> */}
       </div>
-
-      <p className="text-xs text-slate-600 dark:text-slate-400 mt-3 text-center font-medium">
-        Press{" "}
-        <kbd className="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-xs font-mono">
-          Enter
-        </kbd>{" "}
-        to send • AI-powered responses • Image generation available
-      </p>
     </div>
   );
 });
