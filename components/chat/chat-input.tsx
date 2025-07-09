@@ -131,7 +131,7 @@ const ChatInput = memo<ChatInputProps>(({ onSend, isLoading }) => {
               onChange={handleImageUpload}
               className="hidden"
               type="file"
-              accept="image/*"
+              accept="image/png, image/jpeg , image/jpg , image/webp , image/gif , image/heic , image/avif"
               name="photo"
               id=""
             />
