@@ -36,15 +36,9 @@ export const providers = {
 export const botModels = [
   {
     name: "VOID(Best)😁",
-    value: "openai",
+    value: "mistral",
     active: true,
     provider: providers.pollinations,
-  },
-  {
-    name: "VOID(Uncensored)😶‍🌫️",
-    value: "venice/uncensored:free",
-    active: false,
-    provider: providers.openrouter,
   },
   {
     name: "VOID (Reasoning Pro) 🧠",
@@ -64,11 +58,24 @@ export const botModels = [
     active: true,
     provider: providers.pollinations,
   },
+
   {
-    name: "VOID 🧠",
-    value: "moonshotai/kimi-vl-a3b-thinking:free",
+    name: "VOID (Image Analysis) 🌄️",
+    value: "bidara",
     active: false,
-    provider: providers.openrouter,
+    provider: providers.pollinations,
+  },
+  {
+    name: "Evil 😈 (Uncensored)",
+    value: "evil",
+    active: true,
+    provider: providers.pollinations,
+  },
+  {
+    name: "Unity Unrestricted Agent ⚡",
+    value: "unity",
+    active: false,
+    provider: providers.pollinations,
   },
 ];
 
