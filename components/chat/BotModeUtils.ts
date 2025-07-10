@@ -41,9 +41,9 @@ export const botModels = [
     provider: providers.pollinations,
   },
   {
-    name: "VOID(Best)😁",
+    name: "VOID(Code)🧑‍💻",
     value: "mistral",
-    active: false,
+    active: true,
     provider: providers.pollinations,
   },
   
