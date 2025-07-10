@@ -1,32 +1,39 @@
-export const Personalities = [
-  {
-    name: "Select Mode",
-    value: "",
-  },
 
-  {
-    name: "Real VOID 😁",
-    value: "void",
-  },
-  {
-    name: "VOID(indian mode)",
-    value: "indian",
-  },
+ export const personalities = {
+    void:'void',
+    uncensored:'uncensored',
+    imageAnalyser:'imageAnalyser'
+}
 
-  {
-    name: "VOID(roast mode)",
-    value: "roast",
-  },
-  ,
-  // {
-  //     name: "VOID(lazy mode)",
-  //     value: "lazy"
-  // }
-  {
-    name: "VOID(dumb mode)",
-    value: "dumb",
-  },
-];
+// export const Personalities = [
+//   {
+//     name: "Select Mode",
+//     value: "",
+//   },
+
+//   {
+//     name: "Real VOID 😁",
+//     value: "void",
+//   },
+//   {
+//     name: "VOID(indian mode)",
+//     value: "indian",
+//   },
+
+//   {
+//     name: "VOID(roast mode)",
+//     value: "roast",
+//   },
+//   ,
+//   // {
+//   //     name: "VOID(lazy mode)",
+//   //     value: "lazy"
+//   // }
+//   {
+//     name: "VOID(dumb mode)",
+//     value: "dumb",
+//   },
+// ];
 
 export const providers = {
   openrouter: "openrouter",
@@ -39,12 +46,15 @@ export const botModels = [
     value: "openai-fast",
     active: true,
     provider: providers.pollinations,
+    personality: personalities.void
   },
   {
     name: "VOID(Code)🧑‍💻",
     value: "mistral",
     active: true,
     provider: providers.pollinations,
+    personality: personalities.void
+
   },
   
   {
@@ -52,6 +62,8 @@ export const botModels = [
     value: "deepseek-reasoning",
     active: true,
     provider: providers.pollinations,
+    personality: personalities.void
+
   },
   {
     name: "VOID (Code Genius) 🔧",
@@ -66,12 +78,14 @@ export const botModels = [
     value: "bidara",
     active: true,
     provider: providers.pollinations,
+    personality: personalities.imageAnalyser
   },
   {
     name: "VOID(Evil Mode)😈",
     value: "evil",
     active: true,
     provider: providers.pollinations,
+    personality: personalities.uncensored
   },
   {
     name: "Unity Unrestricted Agent ⚡",

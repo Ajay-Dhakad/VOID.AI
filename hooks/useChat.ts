@@ -90,7 +90,8 @@ export function useChat() {
           messages: apiMessages,
           model: localStorage.getItem("model") || "",
           stream: true,
-          provider: botModels.find((model) => model.value === localStorage.getItem("model"))?.provider
+          provider: botModels.find((model) => model.value === localStorage.getItem("model"))?.provider,
+          personality: botModels.find((model) => model.value === localStorage.getItem("model"))?.personality
         }),
       });
 
