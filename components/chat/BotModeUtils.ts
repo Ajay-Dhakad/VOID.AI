@@ -31,7 +31,7 @@ export const Personalities = [
 export const botModels = [
     {
         name: "VOID(Best)😁",
-        value: "openai-large",
+        value: "openai",
         active:true
     },
     {
@@ -56,7 +56,7 @@ export const botModels = [
   },
   {
     name: "VOID (Fast & Light) ⚡",
-    value: "phi",
+    value: "openai-fast",
     active:true
   }
    

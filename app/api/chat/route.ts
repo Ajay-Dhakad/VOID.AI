@@ -61,7 +61,7 @@ export async function POST(req: Request) {
         "X-Title": "VOID AI",
       },
       body: JSON.stringify({
-        model: model || "openai-large",
+        model: model || "openai",
         stream: true,
         messages: [
           {
@@ -74,6 +74,7 @@ export async function POST(req: Request) {
     });
 
     if (!upstreamResponse.ok || !upstreamResponse.body) {
+      console.log(upstreamResponse)
       return new Response("Upstream failed", { status: 502 });
     }
 
