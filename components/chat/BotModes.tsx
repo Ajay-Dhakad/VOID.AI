@@ -12,7 +12,8 @@ function BotModels() {
     if (savedModel) {
       setModel(savedModel);
     }else{
-      setModel("");
+      setModel(botModels[0].value);
+      localStorage.setItem('model', botModels[0].value);
     }
 
   },[])

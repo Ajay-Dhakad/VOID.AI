@@ -1,11 +1,12 @@
+import { providers } from "@/components/chat/BotModeUtils";
 import { GetBotPersonality } from "./botModes/BotModes";
 
 export async function POST(req: Request) {
   try {
-    const { messages, model, personality } = await req.json();
+    const { messages, model,stream:isStream, personality ,provider} = await req.json();
     // const lastMessage = messages[messages.length - 1]?.content || "";
 
-    console.log("Received messages:", messages);
+    console.log("Received messages:", personality,model,provider);
 
     // const imageKeywords = [
     //   "generate image",
@@ -52,23 +53,30 @@ export async function POST(req: Request) {
     // }
 
     // Prepare streaming request to pollinations.ai
-    const upstreamResponse = await fetch("https://text.pollinations.ai/openai", {
+    // https://text.pollinations.ai/openai
+
+    const API_URI = provider == providers.pollinations ? "https://text.pollinations.ai/openai" : provider == providers.openrouter ? "https://openrouter.ai/api/v1/chat/completions" : 'https://text.pollinations.ai/openai'
+
+    // console.log(typeof API_URI)
+
+    const upstreamResponse = await fetch(API_URI, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.AI_API_TOKEN}`,
+        "Authorization": `Bearer ${provider == providers.pollinations ? process.env.AI_API_TOKEN_POLLINATIONS : provider == providers.openrouter ? process.env.AI_API_TOKEN_OPENROUTER : ''}`,
         "Content-Type": "application/json",
         "HTTP-Referer":`${process.env.SITE_BASE_URL}`,
         "X-Title": "VOID AI",
       },
       body: JSON.stringify({
         model: model || "openai",
-        stream: true,
+        stream: isStream || false,
         messages: [
           {
             role: "system",
             content: await GetBotPersonality(personality?.toLowerCase() || "void"),
           },
-          ...messages,
+          ...messages
+        
         ],
       }),
     });
@@ -77,6 +85,8 @@ export async function POST(req: Request) {
       console.log(upstreamResponse)
       return new Response("Upstream failed", { status: 502 });
     }
+
+
 
     const encoder = new TextEncoder();
     const stream = new ReadableStream({

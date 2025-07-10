@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from "react"
 import type { Message, ApiResponse } from "@/types/chat"
 import { toast } from "react-toastify"
+import { botModels } from "@/components/chat/BotModeUtils"
 
 const STORAGE_KEY = "ai-chat-history"
 const MAX_MESSAGES = 100 // Limit to prevent localStorage from getting too large
@@ -89,6 +90,7 @@ export function useChat() {
           messages: apiMessages,
           model: localStorage.getItem("model") || "",
           stream: true,
+          provider: botModels.find((model) => model.value === localStorage.getItem("model"))?.provider
         }),
       });
 
