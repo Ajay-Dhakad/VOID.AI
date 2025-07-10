@@ -62,7 +62,7 @@ export const botModels = [
   {
     name: "VOID (Image Analysis) 🌄️",
     value: "bidara",
-    active: false,
+    active: true,
     provider: providers.pollinations,
   },
   {
