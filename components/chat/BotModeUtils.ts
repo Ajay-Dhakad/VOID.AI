@@ -34,12 +34,19 @@ export const providers = {
 };
 
 export const botModels = [
-  {
-    name: "VOID(Best)😁",
-    value: "mistral",
+    {
+    name: "VOID⚡",
+    value: "openai-fast",
     active: true,
     provider: providers.pollinations,
   },
+  {
+    name: "VOID(Best)😁",
+    value: "mistral",
+    active: false,
+    provider: providers.pollinations,
+  },
+  
   {
     name: "VOID (Reasoning Pro) 🧠",
     value: "deepseek-reasoning",
@@ -52,12 +59,7 @@ export const botModels = [
     active: false,
     provider: providers.pollinations,
   },
-  {
-    name: "VOID (Fast & Light) ⚡",
-    value: "openai-fast",
-    active: true,
-    provider: providers.pollinations,
-  },
+  
 
   {
     name: "VOID (Image Analysis) 🌄️",
@@ -66,7 +68,7 @@ export const botModels = [
     provider: providers.pollinations,
   },
   {
-    name: "Evil 😈 (Uncensored)",
+    name: "VOID(Evil Mode)😈",
     value: "evil",
     active: true,
     provider: providers.pollinations,
