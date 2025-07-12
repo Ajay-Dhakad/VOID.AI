@@ -19,7 +19,7 @@ const AIChat = memo(() => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [initialScroll, setInitialScroll] = useState(false);
 
-  // Scroll to bottom when messages change or loading state changes
+
   useEffect(() => {
     const scrollToBottom = () => {
       if (messagesEndRef.current) {
