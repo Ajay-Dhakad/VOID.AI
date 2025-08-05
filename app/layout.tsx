@@ -6,6 +6,8 @@ import GlitchText from "@/components/bitsAnimations/glitchText";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { SessionProvider } from "next-auth/react";
+import { Navbar } from "@/components/layout/navbar";
 
 export default function RootLayout({
   children,
@@ -91,7 +93,13 @@ export default function RootLayout({
             </div>
           </div>
         ) : (
-          children
+          <SessionProvider>
+            <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <Navbar />
+
+              {children}
+            </div>
+          </SessionProvider>
         )}
       </body>
     </html>

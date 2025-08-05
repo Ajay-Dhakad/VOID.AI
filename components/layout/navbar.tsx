@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { memo, useEffect, useState } from "react"
-import { MessageSquare, Menu, X, History, SunMoon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { HistoryManager } from "@/components/chat/history-manager"
-import VoidLogo from "../voidLooks/voidLogo"
-import Link from "next/link"
-
+import { memo, useEffect, useState } from "react";
+import { MessageSquare, Menu, X, History, SunMoon, LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { HistoryManager } from "@/components/chat/history-manager";
+import VoidLogo from "../voidLooks/voidLogo";
+import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 
 const DarkLightComponent = () => {
   const toggleDarkMode = () => {
-    const htmlElement = document.documentElement
+    const htmlElement = document.documentElement;
     if (htmlElement.classList.contains("dark")) {
-      htmlElement.classList.remove("dark")
-      localStorage.setItem("theme", "light")
+      htmlElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     } else {
-      htmlElement.classList.add("dark")
-      localStorage.setItem("theme", "dark")
+      htmlElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
-  }
+  };
 
   return (
     <Button
@@ -29,29 +29,48 @@ const DarkLightComponent = () => {
     >
       <SunMoon className="h-4 w-4" />
     </Button>
-  )
-}
+  );
+};
 
 const Navbar = memo(() => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const Session = useSession()
+
+  console.log("Session Data:",Session);
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
-
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   useEffect(() => {
-
-    const theme = localStorage.getItem("theme")
+    const theme = localStorage.getItem("theme");
     if (theme) {
-      document.documentElement.classList.add(theme)
+      document.documentElement.classList.add(theme);
     } else {
-      document.documentElement.classList.add("dark")
+      document.documentElement.classList.add("dark");
     }
+  }, []);
 
-  },[])
+  const handleLogin = async () => {
+    console.log("Login clicked");
 
+    await signIn("credentials", {
+      username: "testuser",
+      password: "testpassword",
+      redirect: false,
+    }).then((response) => {
+
+      console.log("Response from signIn:", response);
+      
+      if (response?.error) {
+        console.log("Login failed:", response.error);
+      } else {
+        console.log("Login successful")
+      }});
+
+    console.log("Login clicked");
+  };
 
   return (
     <>
@@ -60,9 +79,15 @@ const Navbar = memo(() => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-             <VoidLogo/>
+              <VoidLogo />
               <div>
-                <Link href={'/'} className="text-2xl font-bold text-slate-900 dark:text-white">VOID.<span className="text-red-600 dark:text-red-600">AI</span></Link>
+                <Link
+                  href={"/"}
+                  className="text-2xl font-bold text-slate-900 dark:text-white"
+                >
+                  VOID.
+                  <span className="text-red-600 dark:text-red-600">AI</span>
+                </Link>
               </div>
             </div>
 
@@ -78,6 +103,22 @@ const Navbar = memo(() => {
                 <History className="h-4 w-4 mr-2" />
                 History
               </Button>
+              { Session?.status !== 'authenticated' && <> <Button
+                  onClick={handleLogin}
+                  variant="ghost"
+                  className="w-full justify-start text-slate-600 dark:text-slate-300"
+                >
+                  <LogIn className="h-4 w-4 mr-3" />
+                  Login
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-slate-600 dark:text-slate-300"
+                >
+                  <LogIn className="h-4 w-4 mr-3" />
+                  SignUp
+                </Button></>}
             </div>
 
             {/* Mobile menu button */}
@@ -89,12 +130,14 @@ const Navbar = memo(() => {
                 size="sm"
                 className="text-slate-600 dark:text-slate-300"
               >
-                {isMobileMenuOpen ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
+                {isMobileMenuOpen ? (
+                  <X className="h-10 w-10" />
+                ) : (
+                  <Menu className="h-10 w-10" />
+                )}
               </Button>
             </div>
           </div>
-
-        
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
@@ -102,8 +145,8 @@ const Navbar = memo(() => {
               <div className="space-y-2">
                 <Button
                   onClick={() => {
-                    setIsHistoryOpen(true)
-                    setIsMobileMenuOpen(false)
+                    setIsHistoryOpen(true);
+                    setIsMobileMenuOpen(false);
                   }}
                   variant="ghost"
                   className="w-full justify-start text-slate-600 dark:text-slate-300"
@@ -111,6 +154,22 @@ const Navbar = memo(() => {
                   <History className="h-4 w-4 mr-3" />
                   History
                 </Button>
+               { Session?.status !== 'authenticated' && <> <Button
+                  onClick={handleLogin}
+                  variant="ghost"
+                  className="w-full justify-start text-slate-600 dark:text-slate-300"
+                >
+                  <LogIn className="h-4 w-4 mr-3" />
+                  Login
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-slate-600 dark:text-slate-300"
+                >
+                  <LogIn className="h-4 w-4 mr-3" />
+                  SignUp
+                </Button></>}
               </div>
             </div>
           )}
@@ -118,11 +177,14 @@ const Navbar = memo(() => {
       </nav>
 
       {/* History Manager Modal */}
-      <HistoryManager isOpen={isHistoryOpen} onClose={() => setIsHistoryOpen(false)} />
+      <HistoryManager
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+      />
     </>
-  )
-})
+  );
+});
 
-Navbar.displayName = "Navbar"
+Navbar.displayName = "Navbar";
 
-export { Navbar }
+export { Navbar };
