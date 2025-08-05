@@ -55,7 +55,10 @@ const AIChat = memo(() => {
         {/* Chat Area */}
         <div className="flex-1 flex flex-col overflow-hidden">
           <ScrollArea className="flex-1 max-w-screen p-4 md:p-6" ref={scrollRef}>
+
+
             <div className="space-y-6 md:space-y-8">
+
               {messages.length === 0 ? (
                 <QuickPrompts onPromptSelect={sendMessage} />
               ) : (

@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import type { QuickPrompt } from "@/types/chat";
 import BlurText from "../bitsAnimations/textAnimation";
+import { useSession } from "next-auth/react";
 
 interface QuickPromptsProps {
   onPromptSelect: (prompt: string) => void;
@@ -66,10 +67,12 @@ const quickPrompts: QuickPrompt[] = [
 ];
 
 const QuickPrompts = memo<QuickPromptsProps>(({ onPromptSelect }) => {
+    const session:any = useSession()
+  
   return (
     <div className="w-full py-12 px-4 md:px-8">
       <BlurText
-        text="Here are some quick prompts to help you get started."
+        text={`${session.data?.user?.firstName || "" } ${session?.status == "authenticated" ? ', ' : ''}Here are some quick prompts to help you get started.`}
         className="text-3xl flex justify-center items-center md:text-4xl font-extrabold text-center text-slate-900 dark:text-white"
         animateBy="words"
         direction="top"
