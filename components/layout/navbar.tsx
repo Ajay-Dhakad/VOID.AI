@@ -7,6 +7,7 @@ import { HistoryManager } from "@/components/chat/history-manager";
 import VoidLogo from "../voidLooks/voidLogo";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const DarkLightComponent = () => {
   const toggleDarkMode = () => {
@@ -35,6 +36,7 @@ const DarkLightComponent = () => {
 const Navbar = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const router = useRouter();
   const Session = useSession()
 
   console.log("Session Data:",Session);
@@ -56,7 +58,7 @@ const Navbar = memo(() => {
     console.log("Login clicked");
 
     await signIn("credentials", {
-      username: "testuser",
+      email: "testuser",
       password: "testpassword",
       redirect: false,
     }).then((response) => {
@@ -112,9 +114,13 @@ const Navbar = memo(() => {
                   Login
                 </Button>
 
-                <Button
+               <Button
                   variant="ghost"
                   className="w-full justify-start text-slate-600 dark:text-slate-300"
+                  onClick={() => {
+                    router.push("/auth/signup");
+                    setIsMobileMenuOpen(false);
+                  }}
                 >
                   <LogIn className="h-4 w-4 mr-3" />
                   SignUp
@@ -166,6 +172,10 @@ const Navbar = memo(() => {
                 <Button
                   variant="ghost"
                   className="w-full justify-start text-slate-600 dark:text-slate-300"
+                  onClick={() => {
+                    router.push("/auth/signup");
+                    setIsMobileMenuOpen(false);
+                  }}
                 >
                   <LogIn className="h-4 w-4 mr-3" />
                   SignUp
