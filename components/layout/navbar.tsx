@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { HistoryManager } from "@/components/chat/history-manager";
 import VoidLogo from "../voidLooks/voidLogo";
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const DarkLightComponent = () => {
@@ -37,9 +37,9 @@ const Navbar = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const router = useRouter();
-  const Session = useSession()
+  const Session = useSession();
 
-  console.log("Session Data:",Session);
+  console.log("Session Data:", Session);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -54,25 +54,6 @@ const Navbar = memo(() => {
     }
   }, []);
 
-  const handleLogin = async () => {
-    console.log("Login clicked");
-
-    await signIn("credentials", {
-      email: "testuser",
-      password: "testpassword",
-      redirect: false,
-    }).then((response) => {
-
-      console.log("Response from signIn:", response);
-      
-      if (response?.error) {
-        console.log("Login failed:", response.error);
-      } else {
-        console.log("Login successful")
-      }});
-
-    console.log("Login clicked");
-  };
 
   return (
     <>
@@ -105,26 +86,49 @@ const Navbar = memo(() => {
                 <History className="h-4 w-4 mr-2" />
                 History
               </Button>
-              { Session?.status !== 'authenticated' && <> <Button
-                  onClick={handleLogin}
-                  variant="ghost"
-                  className="w-full justify-start text-slate-600 dark:text-slate-300"
-                >
-                  <LogIn className="h-4 w-4 mr-3" />
-                  Login
-                </Button>
-
-               <Button
-                  variant="ghost"
-                  className="w-full justify-start text-slate-600 dark:text-slate-300"
-                  onClick={() => {
-                    router.push("/auth/signup");
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  <LogIn className="h-4 w-4 mr-3" />
-                  SignUp
-                </Button></>}
+              {Session?.status !== "authenticated" && (
+                <>
+                  {" "}
+                  <Button
+                    onClick={() => {
+                      router.push("/auth/login");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    variant="ghost"
+                    className="w-full justify-start text-slate-600 dark:text-slate-300"
+                  >
+                    <LogIn className="h-4 w-4 mr-3" />
+                    Login
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-slate-600 dark:text-slate-300"
+                    onClick={() => {
+                      router.push("/auth/signup");
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <LogIn className="h-4 w-4 mr-3" />
+                    SignUp
+                  </Button>
+                </>
+                
+              )}
+              {
+                Session?.status === "authenticated" && (
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-slate-600 dark:text-slate-300"
+                    onClick={() => {
+                      signOut();
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <LogIn className="h-4 w-4 mr-3" />
+                    Logout
+                  </Button>
+                )
+              }
             </div>
 
             {/* Mobile menu button */}
@@ -160,26 +164,48 @@ const Navbar = memo(() => {
                   <History className="h-4 w-4 mr-3" />
                   History
                 </Button>
-               { Session?.status !== 'authenticated' && <> <Button
-                  onClick={handleLogin}
-                  variant="ghost"
-                  className="w-full justify-start text-slate-600 dark:text-slate-300"
-                >
-                  <LogIn className="h-4 w-4 mr-3" />
-                  Login
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-slate-600 dark:text-slate-300"
-                  onClick={() => {
-                    router.push("/auth/signup");
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  <LogIn className="h-4 w-4 mr-3" />
-                  SignUp
-                </Button></>}
+                {Session?.status !== "authenticated" && (
+                  <>
+                    {" "}
+                    <Button
+                      onClick={() => {
+                        router.push("/auth/login");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      variant="ghost"
+                      className="w-full justify-start text-slate-600 dark:text-slate-300"
+                    >
+                      <LogIn className="h-4 w-4 mr-3" />
+                      Login
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-slate-600 dark:text-slate-300"
+                      onClick={() => {
+                        router.push("/auth/signup");
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      <LogIn className="h-4 w-4 mr-3" />
+                      SignUp
+                    </Button>
+                  </>
+                )}
+                 {
+                Session?.status === "authenticated" && (
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-slate-600 dark:text-slate-300"
+                    onClick={() => {
+                      signOut();
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <LogIn className="h-4 w-4 mr-3" />
+                    Logout
+                  </Button>
+                )
+              }
               </div>
             </div>
           )}

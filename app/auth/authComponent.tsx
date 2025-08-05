@@ -52,7 +52,10 @@ function AuthPage({page = "login"}) {
           redirect: false,
         });
 
+        console.log(res,'ressss');
+
         if (res?.error) {
+            toast.dismiss()
           toast.error(res.error);
           return;
         }
@@ -89,7 +92,7 @@ function AuthPage({page = "login"}) {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 dark:bg-gray-900">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-white mt-10">
-        Create A New Account
+       {page !== 'login' ? "Create A New Account" : 'Login To Your Account'}
       </h1>
       <p className="text-center mt-4">Get Authorized To Enjoy All Features.</p>
 
