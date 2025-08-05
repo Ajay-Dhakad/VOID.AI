@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useEffect, useState } from "react";
-import { MessageSquare, Menu, X, History, SunMoon, LogIn, User } from "lucide-react";
+import { MessageSquare, Menu, X, History, SunMoon, LogIn, User, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HistoryManager } from "@/components/chat/history-manager";
 import VoidLogo from "../voidLooks/voidLogo";
@@ -121,12 +121,12 @@ const Navbar = memo(() => {
                     variant="ghost"
                     className="w-full justify-start text-slate-600 dark:text-slate-300"
                     onClick={() => {
-                      router.push("/profile");
+                      router.push("/services/chatbots");
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <User className="h-4 w-4 mr-3" />
-                    {"Profile"}
+                    <Bot className="h-4 w-4" />
+                    {"My ChatBots"}
                   </Button>
                   <Button
                     variant="ghost"
@@ -214,12 +214,12 @@ const Navbar = memo(() => {
                     variant="ghost"
                     className="w-full justify-start text-slate-600 dark:text-slate-300"
                     onClick={() => {
-                      router.push("/profile");
+                      router.push("/services/chatbots");
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <User className="h-4 w-4 mr-3" />
-                    {"Profile"}
+                  <Bot className="h-4 w-4" />
+                    {"My ChatBots"}
                   </Button>
                   <Button
                     variant="ghost"
