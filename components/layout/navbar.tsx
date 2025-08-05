@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useEffect, useState } from "react";
-import { MessageSquare, Menu, X, History, SunMoon, LogIn } from "lucide-react";
+import { MessageSquare, Menu, X, History, SunMoon, LogIn, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HistoryManager } from "@/components/chat/history-manager";
 import VoidLogo from "../voidLooks/voidLogo";
@@ -9,7 +9,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const DarkLightComponent = () => {
+const   DarkLightComponent = () => {
   const toggleDarkMode = () => {
     const htmlElement = document.documentElement;
     if (htmlElement.classList.contains("dark")) {
@@ -37,7 +37,7 @@ const Navbar = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const router = useRouter();
-  const Session = useSession();
+  const Session:any = useSession();
 
   console.log("Session Data:", Session);
 
@@ -116,6 +116,18 @@ const Navbar = memo(() => {
               )}
               {
                 Session?.status === "authenticated" && (
+                  <>
+                   <Button
+                    variant="ghost"
+                    className="w-full justify-start text-slate-600 dark:text-slate-300"
+                    onClick={() => {
+                      router.push("/profile");
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <User className="h-4 w-4 mr-3" />
+                    {"Profile"}
+                  </Button>
                   <Button
                     variant="ghost"
                     className="w-full justify-start text-slate-600 dark:text-slate-300"
@@ -127,6 +139,10 @@ const Navbar = memo(() => {
                     <LogIn className="h-4 w-4 mr-3" />
                     Logout
                   </Button>
+                  
+
+                  {/* <img className="w-9 h-9 rounded-full" src={`https://avatar.iran.liara.run/username?username=${Session?.data?.user?.firstName}+${Session?.data?.user?.lastName}`} alt="profile" /> */}
+                  </>
                 )
               }
             </div>
@@ -193,6 +209,18 @@ const Navbar = memo(() => {
                 )}
                  {
                 Session?.status === "authenticated" && (
+                  <>
+                      <Button
+                    variant="ghost"
+                    className="w-full justify-start text-slate-600 dark:text-slate-300"
+                    onClick={() => {
+                      router.push("/profile");
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <User className="h-4 w-4 mr-3" />
+                    {"Profile"}
+                  </Button>
                   <Button
                     variant="ghost"
                     className="w-full justify-start text-slate-600 dark:text-slate-300"
@@ -204,6 +232,8 @@ const Navbar = memo(() => {
                     <LogIn className="h-4 w-4 mr-3" />
                     Logout
                   </Button>
+
+                 </>
                 )
               }
               </div>
