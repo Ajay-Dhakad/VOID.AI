@@ -98,7 +98,7 @@ function AuthPage({page = "login"}) {
 
       <form
         onSubmit={handleSignUp}
-        className="w-full flex flex-col gap-2 max-w-md mt-8"
+        className="w-full flex flex-col gap-2 px-4 max-w-md mt-8"
       >
       {page !== 'login' && <> <input
           className="py-2 text-black border border-black rounded-md outline-none p-2 text-center "
