@@ -65,7 +65,7 @@ const authOptions: any = {
 
   },
   
-  secret: process.env.NEXTAUTH_SECRET 
+  secret: process.env.NEXTAUTH_SECRET || 'next-auth-secret'
 };
 
 export { authOptions };
