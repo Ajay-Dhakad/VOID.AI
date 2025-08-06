@@ -62,7 +62,10 @@ const authOptions: any = {
       }
       return session;
     },
+
   },
+  
+  secret: process.env.NEXTAUTH_SECRET 
 };
 
 export { authOptions };
