@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-function AuthPage({page = "login"}) {
+function AuthPage({ page = "login" }) {
   const router = useRouter();
 
   const [data, setData]: any = useState({
@@ -23,46 +23,44 @@ function AuthPage({page = "login"}) {
       [name]: value,
     }));
   };
+
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    toast.loading(page == 'login' ? ' Logging In.... ' : ' Creating Account.... ')
+    toast.loading(page === "login" ? "Logging In..." : "Creating Account...");
 
     try {
       const { firstName, lastName, email, password } = data;
 
-       if (page === 'login') {
-      if (!email || !password) {
-        toast.dismiss();
-        toast.error("Please fill in all fields");
-        return;
+      if (page === "login") {
+        if (!email || !password) {
+          toast.dismiss();
+          toast.error("Please fill in all fields");
+          return;
+        }
+      } else {
+        if (!firstName || !lastName || !email || !password) {
+          toast.dismiss();
+          toast.error("Please fill in all fields");
+          return;
+        }
       }
-    } else {
-      if (!firstName || !lastName || !email || !password) {
-        toast.dismiss();
-        toast.error("Please fill in all fields");
-        return;
-      }
-    }
 
-      if (page == "login") {
+      if (page === "login") {
         const res = await signIn("credentials", {
           email,
           password,
           redirect: false,
         });
 
-        console.log(res,'ressss');
-
         if (res?.error) {
-            toast.dismiss()
+          toast.dismiss();
           toast.error(res.error);
           return;
         }
-        toast.dismiss()
-        toast.success("Login Successfull!");
+        toast.dismiss();
+        toast.success("Login Successful!");
         router.push("/");
-
         return;
       }
 
@@ -73,75 +71,88 @@ function AuthPage({page = "login"}) {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        toast.dismiss()
+        toast.dismiss();
         toast.error(errorMessage || "Failed to create account");
         return;
       }
 
-      toast.dismiss()
+      toast.dismiss();
       toast.success("Account Created Successfully 🎉!");
       router.push("/auth/login");
-
-      console.log("Response:", response);
     } catch (error) {
       console.log("Error in handleSignUp:", error);
-      toast.dismiss()
-      toast.error('Something Went Wrong!')
+      toast.dismiss();
+      toast.error("Something went wrong!");
     }
   };
+
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 dark:bg-gray-900">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-white mt-10">
-       {page !== 'login' ? "Create A New Account" : 'Login To Your Account'}
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
+      <h1 className="text-4xl font-extrabold text-gray-800 dark:text-white mt-16 text-center">
+        {page !== "login" ? "Create Your Account" : "Welcome Back"}
       </h1>
-      <p className="text-center mt-4">Get Authorized To Enjoy All Features.</p>
+      <p className="text-gray-600 dark:text-gray-300 text-lg mt-3 text-center">
+        {page !== "login"
+          ? "Sign up to get started."
+          : "Login to continue exploring features."}
+      </p>
 
       <form
         onSubmit={handleSignUp}
-        className="w-full flex flex-col gap-2 px-4 max-w-md mt-8"
+        className="w-full flex text-black flex-col gap-4 max-w-md mt-10"
       >
-      {page !== 'login' && <> <input
-          className="py-2 text-black border border-black rounded-md outline-none p-2 text-center "
-          type="text"
-          name="firstName"
-          id="firstName"
-          onChange={changeInput}
-          placeholder="first name"
-        />
+        {page !== "login" && (
+          <>
+            <input
+              className="py-3 px-4 rounded-md border border-gray-400 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              name="firstName"
+              onChange={changeInput}
+              placeholder="First Name"
+            />
+            <input
+              className="py-3 px-4 rounded-md border border-gray-400 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              name="lastName"
+              onChange={changeInput}
+              placeholder="Last Name"
+            />
+          </>
+        )}
         <input
-          className="py-2 text-black border border-black rounded-md outline-none p-2 text-center "
-          type="text"
-          name="lastName"
-          id="lastName"
-          onChange={changeInput}
-          placeholder="last name"
-        /></>}
-        <input
-          className="py-2 text-black border border-black rounded-md outline-none p-2 text-center "
-          type="text"
+          className="py-3 px-4 rounded-md border border-gray-400 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="email"
           name="email"
           onChange={changeInput}
-          id="email"
-          placeholder="Email"
+          placeholder="Email Address"
         />
         <input
-          className="py-2 text-black border border-black rounded-md outline-none p-2 text-center "
+          className="py-3 px-4 rounded-md border border-gray-400 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
           type="password"
           name="password"
-          id="password"
           onChange={changeInput}
           placeholder="Password"
         />
 
-        <Button type="submit" variant={"default"}>
-          Sign Up
+        <Button
+          type="submit"
+          variant="default"
+          className="py-3 text-lg font-semibold rounded-md"
+        >
+          {page === "login" ? "Login" : "Sign Up"}
         </Button>
 
-        <Link className="text-center" href={page == 'login' ? '/auth/signup' : '/auth/login'}>{page == 'login' ? 'Dont Have Any Account ?' : 'Already Have An Account!'}</Link>
-
+        <Link
+          className="text-center text-blue-600 hover:underline text-sm font-medium mt-2"
+          href={page === "login" ? "/auth/signup" : "/auth/login"}
+        >
+          {page === "login"
+            ? "Don't have an account? Sign up"
+            : "Already have an account? Login"}
+        </Link>
       </form>
     </div>
   );
 }
 
-export  {AuthPage};
+export { AuthPage };
