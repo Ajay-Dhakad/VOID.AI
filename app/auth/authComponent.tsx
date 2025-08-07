@@ -78,7 +78,7 @@ function AuthPage({ page = "login" }) {
 
       toast.dismiss();
       toast.success("Account Created Successfully 🎉!");
-      router.push("/auth/login");
+      router.refresh()
     } catch (error) {
       console.log("Error in handleSignUp:", error);
       toast.dismiss();

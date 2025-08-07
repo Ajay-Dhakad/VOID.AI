@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-const authRoutes = ['/auth/login', '/auth/register', '/auth'];
+const authRoutes = ['/auth/login', '/auth/register'];
 
 
 export async function middleware(req: NextRequest) {
@@ -14,7 +14,6 @@ export async function middleware(req: NextRequest) {
   }else if (!token && !authRoutes.some(route => pathname.startsWith(route))) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
-
 
 
   return NextResponse.next();
