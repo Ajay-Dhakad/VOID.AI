@@ -60,7 +60,7 @@ function AuthPage({ page = "login" }) {
         }
         toast.dismiss();
         toast.success("Login Successful!");
-        router.push("/");
+      router.refresh()
         return;
       }
 
@@ -78,7 +78,7 @@ function AuthPage({ page = "login" }) {
 
       toast.dismiss();
       toast.success("Account Created Successfully 🎉!");
-      router.refresh()
+      router.push("/auth/login");
     } catch (error) {
       console.log("Error in handleSignUp:", error);
       toast.dismiss();
