@@ -43,7 +43,7 @@ export const providers = {
 export const botModels = [
     {
     name: "VOID⚡",
-    value: "deepseek",
+    value: "openai",
     active: true,
     provider: providers.pollinations,
     personality: personalities.void
@@ -51,7 +51,7 @@ export const botModels = [
   {
     name: "VOID(Code)🧑‍💻",
     value: "mistral",
-    active: true,
+    active: false,
     provider: providers.pollinations,
     personality: personalities.void
 
@@ -60,7 +60,7 @@ export const botModels = [
   {
     name: "VOID (Reasoning Pro) 🧠",
     value: "deepseek-reasoning",
-    active: true,
+    active: false,
     provider: providers.pollinations,
     personality: personalities.void
 
@@ -76,7 +76,7 @@ export const botModels = [
   {
     name: "VOID (Image Analysis) 🌄️",
     value: "bidara",
-    active: true,
+    active: false,
     provider: providers.pollinations,
     personality: personalities.imageAnalyser
   },
