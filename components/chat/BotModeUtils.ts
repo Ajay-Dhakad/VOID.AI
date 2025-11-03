@@ -43,7 +43,7 @@ export const providers = {
 export const botModels = [
     {
     name: "VOID⚡",
-    value: "openai",
+    value: "openai-fast",
     active: true,
     provider: providers.pollinations,
     personality: personalities.void

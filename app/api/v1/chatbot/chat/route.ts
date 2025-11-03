@@ -36,7 +36,7 @@ export async function POST(req: Request) {
             "Authorization": `Bearer ${process.env.AI_API_TOKEN_POLLINATIONS}`,
         },
         body: JSON.stringify({
-            model: 'openai',
+            model: 'openai-fast',
             stream: false,
             messages: [
             {
