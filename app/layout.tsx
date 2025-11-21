@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import { Navbar } from "@/components/layout/navbar";
+import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 
 export default function RootLayout({
   children,
@@ -94,6 +95,7 @@ export default function RootLayout({
           </div>
         ) : (
           <SessionProvider>
+            <AnalyticsTracker />
             <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
         <Navbar />
 
