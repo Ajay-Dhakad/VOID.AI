@@ -8,7 +8,7 @@ import { useChat } from "@/hooks/useChat";
 import { MessageBubble } from "@/components/chat/message-bubble";
 import { QuickPrompts } from "@/components/chat/quick-prompts";
 import { ChatInput } from "@/components/chat/chat-input";
-import { LoadingDots } from "@/components/ui/loading-dots";
+import { ThinkingIndicator } from "@/components/ui/thinking-indicator";
 import { FloatingParticles } from "@/components/ui/floating-particles";
 import { Navbar } from "@/components/layout/navbar";
 import VoidLogo from "@/components/voidLooks/voidLogo";
@@ -95,16 +95,14 @@ const AIChat = memo(() => {
 
               {isLoading && (
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-600 flex items-center justify-center">
+                  <div className="hidden md:block">
                     <VoidLogo />
                   </div>
-                  <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <LoadingDots size="md" />
-                      <span className="text-sm text-slate-700 dark:text-slate-200 font-medium">
-                        Void is thinking...
-                      </span>
-                    </div>
+                  <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 md:p-5 shadow-sm min-w-[280px]">
+                    <ThinkingIndicator 
+                      showProgress={true} 
+                      estimatedTime={3}
+                    />
                   </div>
                 </div>
               )}
