@@ -57,19 +57,24 @@ const Navbar = memo(() => {
 
   return (
     <>
-      <nav className="bg-transparent backdrop-blur-lg dark:bg-transparent border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
+      <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b-2 border-transparent sticky top-0 z-50 shadow-lg relative">
+        {/* Gradient border effect */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500"></div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <VoidLogo />
+              <div className="transition-transform hover:scale-110 duration-300">
+                <VoidLogo />
+              </div>
               <div>
                 <Link
                   href={"/"}
-                  className="text-2xl font-bold text-slate-900 dark:text-white"
+                  className="text-2xl font-bold"
                 >
-                  VOID.
-                  <span className="text-red-600 dark:text-red-600">AI</span>
+                  <span className="gradient-text">VOID.</span>
+                  <span className="text-red-600 dark:text-red-500">AI</span>
                 </Link>
               </div>
             </div>
@@ -81,7 +86,7 @@ const Navbar = memo(() => {
                 onClick={() => setIsHistoryOpen(true)}
                 variant="ghost"
                 size="sm"
-                className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-300 hover:scale-105"
               >
                 <History className="h-4 w-4 mr-2" />
                 History

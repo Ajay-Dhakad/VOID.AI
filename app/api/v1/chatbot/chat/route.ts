@@ -23,29 +23,29 @@ export async function POST(req: Request) {
 
     // const {messages = [{user:'hello'}]} = await req.json();
 
-    const {messages} = await req.json();
+    const { messages } = await req.json();
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json({ error: "Messages are required in format {messages: [{role:'user',content:'hello'},{role:'assistant',content:'hello'},{role:'user',content:'who are you ?'}]}" }, { status: 400 });
     }
-    
+
     const BotResponse = await fetch("https://text.pollinations.ai/openai", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.AI_API_TOKEN_POLLINATIONS}`,
-        },
-        body: JSON.stringify({
-            model: 'evil',
-            stream: false,
-            messages: [
-            {
-                role: "system",
-                content: isBot.context,
-            },
-            ...messages,
-            ],
-        }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.AI_API_TOKEN_POLLINATIONS}`,
+      },
+      body: JSON.stringify({
+        model: 'gemini',
+        stream: false,
+        messages: [
+          {
+            role: "system",
+            content: isBot.context,
+          },
+          ...messages,
+        ],
+      }),
     }
 
     )
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     const responseData = await BotResponse.json();
     // console.log("Response from Bot:", responseData?.choices[0]?.message?.content);
 
-    return NextResponse.json({role:'assistant',content: responseData?.choices[0]?.message?.content}, { status: 200 });
+    return NextResponse.json({ role: 'assistant', content: responseData?.choices[0]?.message?.content }, { status: 200 });
   } catch (error) {
     console.error("Error creating chatbot:", error);
     return NextResponse.json(

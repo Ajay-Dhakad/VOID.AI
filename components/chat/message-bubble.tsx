@@ -271,10 +271,10 @@ code({ inline, className, children, ...props }: any) {
       )}
 
       <Card
-        className={`max-w-[90%] p-2 sm:max-w-[80%] md:max-w-[75%] transition-all duration-200 hover:shadow-md ${
+        className={`max-w-[90%] p-2 sm:max-w-[80%] md:max-w-[75%] transition-all duration-300 hover:shadow-xl ${
           isUser
-            ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-            : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm"
+            ? "bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600 text-white border-transparent shadow-glow-purple"
+            : "bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-glow-blue"
         }`}
       >
         <CardContent className="p-4 md:p-5">
@@ -341,7 +341,7 @@ code({ inline, className, children, ...props }: any) {
 
       {isUser && (
         <div className="flex-shrink-0">
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-600 dark:bg-slate-700 flex items-center justify-center shadow-sm">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center shadow-lg ring-2 ring-purple-500/30">
             <User className="h-4 w-4 md:h-5 md:w-5 text-white" />
           </div>
         </div>

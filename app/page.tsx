@@ -45,7 +45,7 @@ const AIChat = memo(() => {
   }, [messages]);
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-[150px] dark:bg-slate-900">
+    <div className="min-h-screen bg-slate-50 pb-[150px] dark:bg-slate-900 mesh-gradient relative overflow-hidden">
       {/* Subtle background pattern */}
       {/* <FloatingParticles /> */}
 
@@ -85,7 +85,7 @@ const AIChat = memo(() => {
                       messages[messages.length - 1].role !== "assistant";
                     // console.log("Rendering message:", isLast, message);
                     return (
-                      <div key={i} ref={isLast ? messagesEndRef : null}>
+                      <div key={i} ref={isLast ? messagesEndRef : null} className="animate-fadeIn">
                         <MessageBubble message={message} />
                       </div>
                     );
