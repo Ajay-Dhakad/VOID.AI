@@ -88,7 +88,7 @@ export const botModels = [
     personality: personalities.uncensored
   },
   {
-    name: "VOID EVIL⚡",
+    name: "VOID(Evil Mode)😈",
     value: "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
     active: true,
     provider: providers.openrouter,
