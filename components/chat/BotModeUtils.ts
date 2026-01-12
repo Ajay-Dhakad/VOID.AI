@@ -1,8 +1,8 @@
 
- export const personalities = {
-    void:'void',
-    uncensored:'uncensored',
-    imageAnalyser:'imageAnalyser'
+export const personalities = {
+  void: 'void',
+  uncensored: 'uncensored',
+  imageAnalyser: 'imageAnalyser'
 }
 
 // export const Personalities = [
@@ -41,7 +41,7 @@ export const providers = {
 };
 
 export const botModels = [
-    {
+  {
     name: "VOID⚡",
     value: "openai-fast",
     active: true,
@@ -56,7 +56,7 @@ export const botModels = [
     personality: personalities.void
 
   },
-  
+
   {
     name: "VOID (Reasoning Pro) 🧠",
     value: "deepseek-reasoning",
@@ -71,7 +71,7 @@ export const botModels = [
     active: false,
     provider: providers.pollinations,
   },
-  
+
 
   {
     name: "VOID (Image Analysis) 🌄️",
@@ -83,15 +83,15 @@ export const botModels = [
   {
     name: "VOID(Evil Mode)😈",
     value: "evil",
-    active: true,
+    active: false,
     provider: providers.pollinations,
     personality: personalities.uncensored
   },
   {
-    name: "Unity Unrestricted Agent ⚡",
-    value: "unity",
-    active: false,
-    provider: providers.pollinations,
+    name: "VOID EVIL⚡",
+    value: "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+    active: true,
+    provider: providers.openrouter,
   },
 ];
 

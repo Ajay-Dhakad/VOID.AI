@@ -45,160 +45,160 @@ export function useChat() {
       }
     }
   }, [messages, toast])
-  
+
 
 
 
 
 
   const sendMessage = useCallback(
-  async (content: any): Promise<void> => {
+    async (content: any): Promise<void> => {
 
-    let userMessage:Message
+      let userMessage: Message
 
-    if (!content) {
-      return;
-    }
+      if (!content) {
+        return;
+      }
       userMessage = Array.isArray(content) ? {
         id: crypto.randomUUID(),
         role: "user",
         content: [...content],
         timestamp: new Date(),
       } : {
-      id: crypto.randomUUID(),
-      role: "user",
-      content: content.trim(),
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setIsLoading(true);
-
-    const conversationHistory = [...messages, userMessage];
-    const recentHistory = conversationHistory.slice(-20);
-
-    const apiMessages = recentHistory.map(({ role, content }) => ({
-      role,
-      content,
-    }));
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: apiMessages,
-          model: localStorage.getItem("model") || "",
-          stream: true,
-          provider: botModels.find((model) => model.value === localStorage.getItem("model"))?.provider,
-          personality: botModels.find((model) => model.value === localStorage.getItem("model"))?.personality
-        }),
-      });
-
-      if (!response.ok || !response.body) {
-        toast("Something went wrong...");
-        return;
-      }
-
-    const contentType = response.headers.get("Content-Type") || "";
-
-
-    console.log("Response Content-Type:", contentType);
-
-//  if (!contentType.includes("text/plain")) {
-
-//         const data = await response.json();
-
-//           const aiMessage: Message = {
-//             id: crypto.randomUUID(),
-//             role: "assistant",
-//             content: data.message,
-//             timestamp: new Date(),
-//             isImage: true,
-//             imageUrl: data.imageUrl,
-//             imagePrompt: data.imagePrompt,
-//           };
-
-//           setMessages((prev) => [...prev, aiMessage]);
-
-//         setIsLoading(false);
-//         return;
-//       }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
-      let aiContent = "";
-
-      const aiMessage: Message = {
         id: crypto.randomUUID(),
-        role: "assistant",
-        content: "",
+        role: "user",
+        content: content.trim(),
         timestamp: new Date(),
       };
 
-      setMessages((prev) => [...prev, aiMessage]);
+      setMessages((prev) => [...prev, userMessage]);
+      setIsLoading(true);
 
-      let buffer = "";
+      const conversationHistory = [...messages, userMessage];
+      const recentHistory = conversationHistory.slice(-20);
 
-while (true) {
-  const { value, done } = await reader.read();
-  if (done) break;
+      const apiMessages = recentHistory.map(({ role, content }) => ({
+        role,
+        content,
+      }));
 
-  buffer += decoder.decode(value, { stream: true });
-
-  let lines = buffer.split("\n");
-
-  buffer = lines.pop() || "";
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed.startsWith("data:")) continue;
-
-    const jsonStr = trimmed.replace("data:", "").trim();
-
-    if (jsonStr === "[DONE]") {
-      buffer = "";
-      break;
-    }
-
-    try {
-      const parsed = JSON.parse(jsonStr);
-      const contentPiece = parsed.choices?.[0]?.delta?.content;
-
-      if (contentPiece) {
-        aiContent += contentPiece;
-
-        setMessages((prev) => {
-          const updated = [...prev];
-          const lastIndex = updated.findLastIndex(
-            (m) => m.role === "assistant"
-          );
-          if (lastIndex !== -1) {
-            updated[lastIndex] = {
-              ...updated[lastIndex],
-              content: aiContent,
-            };
-          }
-          return updated;
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: apiMessages,
+            model: localStorage.getItem("model") || "",
+            stream: true,
+            provider: botModels.find((model) => model.value === localStorage.getItem("model"))?.provider,
+            personality: botModels.find((model) => model.value === localStorage.getItem("model"))?.personality
+          }),
         });
 
-         await new Promise((r) => setTimeout(r, 10));
+        if (!response.ok || !response.body) {
+          toast("Something went wrong...");
+          return;
+        }
 
+        const contentType = response.headers.get("Content-Type") || "";
+
+
+        console.log("Response Content-Type:", contentType);
+
+        //  if (!contentType.includes("text/plain")) {
+
+        //         const data = await response.json();
+
+        //           const aiMessage: Message = {
+        //             id: crypto.randomUUID(),
+        //             role: "assistant",
+        //             content: data.message,
+        //             timestamp: new Date(),
+        //             isImage: true,
+        //             imageUrl: data.imageUrl,
+        //             imagePrompt: data.imagePrompt,
+        //           };
+
+        //           setMessages((prev) => [...prev, aiMessage]);
+
+        //         setIsLoading(false);
+        //         return;
+        //       }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let aiContent = "";
+
+        const aiMessage: Message = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: "",
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, aiMessage]);
+
+        let buffer = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+
+          let lines = buffer.split("\n");
+
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith("data:")) continue;
+
+            const jsonStr = trimmed.replace("data:", "").trim();
+
+            if (jsonStr === "[DONE]") {
+              buffer = "";
+              break;
+            }
+
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const contentPiece = parsed.choices?.[0]?.delta?.content;
+
+              if (contentPiece) {
+                aiContent += contentPiece;
+
+                setMessages((prev) => {
+                  const updated = [...prev];
+                  const lastIndex = updated.findLastIndex(
+                    (m) => m.role === "assistant"
+                  );
+                  if (lastIndex !== -1) {
+                    updated[lastIndex] = {
+                      ...updated[lastIndex],
+                      content: aiContent,
+                    };
+                  }
+                  return updated;
+                });
+
+                await new Promise((r) => setTimeout(r, 10));
+
+              }
+            } catch (err) {
+              console.error("❌ Stream parse error:", jsonStr, err);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Chat error:", error);
+        toast("Oops! Something went wrong. Please try again later.");
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error("❌ Stream parse error:", jsonStr, err);
-    }
-  }
-}
-    } catch (error) {
-      console.error("Chat error:", error);
-      toast("Oops! Something went wrong. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  },
-  [messages, toast]
-);
+    },
+    [messages, toast]
+  );
 
 
 

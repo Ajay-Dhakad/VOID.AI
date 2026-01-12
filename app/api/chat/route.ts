@@ -3,10 +3,10 @@ import { GetBotPersonality } from "./botModes/BotModes";
 
 export async function POST(req: Request) {
   try {
-    const { messages, model,stream:isStream, personality ,provider} = await req.json();
+    const { messages, model, stream: isStream, personality, provider } = await req.json();
     // const lastMessage = messages[messages.length - 1]?.content || "";
 
-    console.log("Received messages:", personality,model,provider);
+    console.log("Received messages:", personality, model, provider);
 
     // const imageKeywords = [
     //   "generate image",
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       headers: {
         "Authorization": `Bearer ${provider == providers.pollinations ? process.env.AI_API_TOKEN_POLLINATIONS : provider == providers.openrouter ? process.env.AI_API_TOKEN_OPENROUTER : ''}`,
         "Content-Type": "application/json",
-        "HTTP-Referer":`${process.env.SITE_BASE_URL}`,
+        "HTTP-Referer": `${process.env.SITE_BASE_URL}`,
         "X-Title": "VOID AI",
       },
       body: JSON.stringify({
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
             content: await GetBotPersonality(personality?.toLowerCase() || "void"),
           },
           ...messages
-        
+
         ],
       }),
     });
