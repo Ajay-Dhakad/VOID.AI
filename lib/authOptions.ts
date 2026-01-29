@@ -12,30 +12,30 @@ const authOptions: any = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-          const { email, password } = credentials;
+        const { email, password } = credentials;
 
-          if (!email || !password) {
-            throw new Error("Email and password are required");
-          }
+        if (!email || !password) {
+          throw new Error("Email and password are required");
+        }
 
-          await connectToDb()
+        await connectToDb()
 
-          const user = await User.findOne({
-            email: email,
-          });
+        const user = await User.findOne({
+          email: email,
+        });
 
-          if (!user) {
-            throw new Error("No user found with the given email");
-          }
+        if (!user) {
+          throw new Error("No user found with the given email");
+        }
 
-          const isPasswordValid = await user.comparePassword(password);
+        const isPasswordValid = await user.comparePassword(password);
 
-          if (!isPasswordValid) {
-            throw new Error("Invalid password");
-          }
+        if (!isPasswordValid) {
+          throw new Error("Invalid password");
+        }
 
-          return user;
-    
+        return user;
+
       },
     }),
   ],
@@ -64,7 +64,7 @@ const authOptions: any = {
     },
 
   },
-  
+
   secret: process.env.NEXTAUTH_SECRET || 'next-auth-secret'
 };
 
