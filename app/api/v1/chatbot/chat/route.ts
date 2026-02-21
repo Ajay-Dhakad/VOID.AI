@@ -29,14 +29,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Messages are required in format {messages: [{role:'user',content:'hello'},{role:'assistant',content:'hello'},{role:'user',content:'who are you ?'}]}" }, { status: 400 });
     }
 
-    const BotResponse = await fetch("https://text.pollinations.ai/openai", {
+    const BotResponse = await fetch("https://gen.pollinations.ai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${process.env.AI_API_TOKEN_POLLINATIONS}`,
       },
       body: JSON.stringify({
-        model: 'gemini',
+        model: 'openai-fast',
         stream: false,
         messages: [
           {
