@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     // Prepare streaming request to pollinations.ai
     // https://text.pollinations.ai/openai
 
-    const API_URI = provider == providers.pollinations ? "https://text.pollinations.ai/openai" : provider == providers.openrouter ? "https://openrouter.ai/api/v1/chat/completions" : 'https://text.pollinations.ai/openai'
+    const API_URI = provider == providers.pollinations ? "https://gen.pollinations.ai/v1/chat/completions" : provider == providers.openrouter ? "https://openrouter.ai/api/v1/chat/completions" : 'https://text.pollinations.ai/openai'
 
     // console.log(typeof API_URI)
 
